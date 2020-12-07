@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:mimi/constants/constants.dart';
 import 'package:mimi/logic/bloc/bloc.dart';
-import 'package:mimi/ui/screens/home/home_screen.dart';
+import 'package:mimi/constants/constants.dart';
+import 'package:mimi/ui/screens/results/results_screen.dart';
 import 'package:mimi/ui/screens/profile/profile_screen.dart';
+import 'package:mimi/ui/screens/declarations/declarations_screen.dart';
+import 'package:mimi/ui/screens/transactions/transactions_screen.dart';
 
 import 'nav_bar.dart';
 
@@ -51,16 +53,9 @@ class _FrameState extends State<Frame> with SingleTickerProviderStateMixin {
           key: _scaffoldKey,
           body: PageView(
             children: <Widget>[
-              Container(
-                color: Colors.orange,
-              ),
-              Container(
-                color: Colors.yellow,
-              ),
-              HomeScreen(),
-              Container(
-                color: Colors.red,
-              ),
+              TransactionsScreen(),
+              ResultsScreen(),
+              DeclarationsScreen(),
               ProfileScreen(),
             ],
             controller: pageController,
