@@ -17,7 +17,7 @@ final darkTheme = ThemeData(
 );
 
 final lightTheme = ThemeData(
-  textTheme: GoogleFonts.openSansTextTheme(),
+  textTheme: GoogleFonts.ubuntuTextTheme(),
   primarySwatch: Colors.blueGrey,
   primaryColor: Color(0xFF5353e0),
   brightness: Brightness.light,

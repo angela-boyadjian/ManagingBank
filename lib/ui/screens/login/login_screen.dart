@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 
 import 'package:users/users_repository.dart';
 
 import 'package:mimi/logic/bloc/bloc.dart';
 import 'package:mimi/logic/cubit/cubit.dart';
 import 'package:mimi/constants/constants.dart';
-import 'package:mimi/ui/widgets/auth_button.dart';
+
+import 'widgets/custom_card.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key key}) : super(key: key);
@@ -49,34 +49,8 @@ class _LoginScreenState extends State<LoginScreen> {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       );
 
-  Widget _buildTitle() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 0),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: ColorizeAnimatedTextKit(
-            text: ["Template"],
-            isRepeatingAnimation: true,
-            textStyle: Theme.of(context)
-                .textTheme
-                .headline2
-                .copyWith(color: Colors.white),
-            colors: [
-              Colors.white,
-              Colors.blue,
-              Colors.yellow,
-              Colors.red,
-              Colors.orange,
-            ],
-            textAlign: TextAlign.center,
-            alignment: AlignmentDirectional.center),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return MultiBlocListener(
       listeners: [
         BlocListener<UserBloc, UserState>(listener: (userContext, state) {
@@ -124,51 +98,37 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
-        body: Center(
-          child: SingleChildScrollView(
-            child: Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.blue, Colors.orange],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(36.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    _buildTitle(),
-                    SizedBox(height: 45.0),
-                    TextField(
-                      controller: emailController,
-                      style: textTheme.subtitle1,
-                      decoration: textFieldDecoration('Email'),
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [Theme.of(context).primaryColor, Color(0xFF373794)],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter),
+          ),
+          child: Column(
+            children: <Widget>[
+              Flexible(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 50.0),
+                  child: Center(
+                    child: Image.asset(
+                      "assets/images/logo.png",
+                      scale: 1.3,
                     ),
-                    SizedBox(height: 25.0),
-                    TextField(
-                      controller: passwordController,
-                      obscureText: true,
-                      style: textTheme.subtitle1,
-                      decoration: textFieldDecoration('Password'),
-                    ),
-                    SizedBox(
-                      height: 35.0,
-                    ),
-                    AuthButton(
-                        text: 'Login',
-                        onPressed: () => Navigator.of(context).pushNamed(homeRoute)),
-                        // onPressed: () => context
-                        //     .read<LoginCubit>()
-                        //     .logInWithCredentials(
-                        //         emailController.text, passwordController.text)),
-                  ],
+                  ),
                 ),
               ),
-            ),
+              Flexible(
+                flex: 3,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 40.0),
+                  child: CustomCard(),
+                ),
+              ),
+            ],
           ),
         ),
       ),
