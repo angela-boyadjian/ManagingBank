@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final darkTheme = ThemeData(
-  textTheme: GoogleFonts.openSansTextTheme().apply(
+  textTheme: GoogleFonts.ubuntuTextTheme().apply(
     bodyColor: Colors.white,
     displayColor: Colors.white,
   ),
