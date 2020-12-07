@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:mimi/constants/constants.dart';
 
