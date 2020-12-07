@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mimi/ui/screens/login/widgets/reset_card.dart';
 
-import 'package:mimi/ui/widgets/custom_button.dart';
+import 'package:mimi/ui/screens/login/widgets/reset_card.dart';
 
 class ResetScreen extends StatefulWidget {
   ResetScreen({Key key}) : super(key: key);
