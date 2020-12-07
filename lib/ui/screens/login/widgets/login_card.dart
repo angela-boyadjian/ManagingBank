@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:mimi/constants/constants.dart';
 import 'package:mimi/ui/widgets/custom_button.dart';
 
-class CustomCard extends StatefulWidget {
-  CustomCard({Key key}) : super(key: key);
+class LoginCard extends StatefulWidget {
+  LoginCard({Key key}) : super(key: key);
 
   @override
-  _CustomCardState createState() => _CustomCardState();
+  _LoginCardState createState() => _LoginCardState();
 }
 
-class _CustomCardState extends State<CustomCard> {
+class _LoginCardState extends State<LoginCard> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -113,7 +115,8 @@ class _CustomCardState extends State<CustomCard> {
                   Visibility(
                     visible: passwordController.text.isEmpty,
                     child: FlatButton(
-                        onPressed: () => {print("pressed")},
+                        onPressed: () =>
+                            Navigator.of(context).pushNamed(resetRoute),
                         child: Text(
                           "Mot de passe oublié ?",
                           style: Theme.of(context).textTheme.subtitle2.copyWith(
@@ -137,7 +140,9 @@ class _CustomCardState extends State<CustomCard> {
             flex: 0,
             child: Padding(
               padding: const EdgeInsets.only(top: 40.0),
-              child: CustomButton(onPressed: () => {}, text: "Se connecter"),
+              child: CustomButton(
+                  onPressed: () => Navigator.of(context).pushNamed(homeRoute),
+                  text: "Se connecter"),
             ),
           ),
         ],

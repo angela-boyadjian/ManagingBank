@@ -5,13 +5,12 @@ import 'package:page_transition/page_transition.dart';
 
 import 'package:mimi/logic/bloc/bloc.dart';
 import 'package:mimi/ui/widgets/frame.dart';
-import 'package:mimi/logic/cubit/cubit.dart';
 import 'package:mimi/constants/constants.dart';
 import 'package:mimi/ui/screens/login/login_screen.dart';
+import 'package:mimi/ui/screens/login/reset_screen.dart';
 import 'package:mimi/ui/screens/splash/splash_screen.dart';
 import 'package:mimi/ui/screens/profile/profile_screen.dart';
 import 'package:mimi/ui/screens/settings/settings_screen.dart';
-import 'package:mimi/ui/screens/profile_edit/profile_edit_screen.dart';
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings settings) {
@@ -26,6 +25,12 @@ class AppRouter {
       case loginRoute:
         return PageTransition(
           child: LoginScreen(),
+          type: PageTransitionType.fade,
+          duration: Duration(milliseconds: 400),
+        );
+      case resetRoute:
+        return PageTransition(
+          child: ResetScreen(),
           type: PageTransitionType.fade,
           duration: Duration(milliseconds: 400),
         );

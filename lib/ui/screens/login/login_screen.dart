@@ -8,7 +8,7 @@ import 'package:mimi/logic/bloc/bloc.dart';
 import 'package:mimi/logic/cubit/cubit.dart';
 import 'package:mimi/constants/constants.dart';
 
-import 'widgets/custom_card.dart';
+import 'widgets/login_card.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key key}) : super(key: key);
@@ -32,22 +32,6 @@ class _LoginScreenState extends State<LoginScreen> {
     passwordController.dispose();
     super.dispose();
   }
-
-  Widget horizontalLine() => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        child: Container(
-          width: MediaQuery.of(context).size.width / 4,
-          height: 1.0,
-          color: Colors.white.withOpacity(0.6),
-        ),
-      );
-
-  InputDecoration textFieldDecoration(String hintText) => InputDecoration(
-        labelText: hintText,
-        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: hintText,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      );
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   flex: 3,
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 40.0),
-                    child: CustomCard(),
+                    child: LoginCard(),
                   ),
                 ),
               ],
