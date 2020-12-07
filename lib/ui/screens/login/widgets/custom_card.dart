@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:mimi/ui/widgets/custom_button.dart';
 
@@ -25,7 +26,13 @@ class _CustomCardState extends State<CustomCard> {
     super.dispose();
   }
 
-  InputDecoration _textFieldDecoration(String hintText) {
+  Widget _getSuffix() => Visibility(
+        visible: passwordController.text.isNotEmpty,
+        child:
+            Icon(FontAwesomeIcons.eye, color: Theme.of(context).primaryColor),
+      );
+
+  InputDecoration _textFieldDecoration(String hintText, bool isPassword) {
     var style = Theme.of(context)
         .textTheme
         .subtitle1
@@ -36,6 +43,11 @@ class _CustomCardState extends State<CustomCard> {
       hintText: hintText,
       labelStyle: style,
       hintStyle: style,
+      suffixIcon: isPassword ? _getSuffix() : null,
+      suffixStyle: Theme.of(context)
+          .textTheme
+          .subtitle2
+          .copyWith(color: Theme.of(context).primaryColor),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: Theme.of(context).primaryColor),
         borderRadius: BorderRadius.circular(10.0),
@@ -81,7 +93,8 @@ class _CustomCardState extends State<CustomCard> {
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: TextField(
-                decoration: _textFieldDecoration("Email"),
+                controller: emailController,
+                decoration: _textFieldDecoration("Email", false),
               ),
             ),
           ),
@@ -89,9 +102,27 @@ class _CustomCardState extends State<CustomCard> {
             flex: 2,
             child: Padding(
               padding: const EdgeInsets.all(10.0),
-              child: TextField(
-                obscureText: true,
-                decoration: _textFieldDecoration("Mot de passe"),
+              child: Stack(
+                alignment: Alignment.centerRight,
+                children: [
+                  TextField(
+                    obscureText: true,
+                    controller: passwordController,
+                    decoration: _textFieldDecoration("Mot de passe", true),
+                  ),
+                  Visibility(
+                    visible: passwordController.text.isEmpty,
+                    child: FlatButton(
+                        onPressed: () => {print("pressed")},
+                        child: Text(
+                          "Mot de passe oublié ?",
+                          style: Theme.of(context).textTheme.subtitle2.copyWith(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w500),
+                        )),
+                  ),
+                ],
               ),
             ),
           ),

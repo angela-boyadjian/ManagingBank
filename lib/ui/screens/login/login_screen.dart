@@ -98,37 +98,39 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
-        body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [Theme.of(context).primaryColor, Color(0xFF373794)],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter),
-          ),
-          child: Column(
-            children: <Widget>[
-              Flexible(
-                flex: 1,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 50.0),
-                  child: Center(
-                    child: Image.asset(
-                      "assets/images/logo.png",
-                      scale: 1.3,
+        body: SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [Theme.of(context).primaryColor, Color(0xFF373794)],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter),
+            ),
+            child: Column(
+              children: <Widget>[
+                Flexible(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 50.0),
+                    child: Center(
+                      child: Image.asset(
+                        "assets/images/logo.png",
+                        scale: 1.3,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Flexible(
-                flex: 3,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 40.0),
-                  child: CustomCard(),
+                Flexible(
+                  flex: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 40.0),
+                    child: CustomCard(),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
