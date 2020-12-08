@@ -41,7 +41,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
           width: 55,
           child: RawMaterialButton(
             onPressed: () {},
-            elevation: 5.0,
+            elevation: 8.0,
             fillColor: Theme.of(context).primaryColor,
             child: Icon(
               FontAwesomeIcons.bell,
@@ -50,7 +50,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
             padding: EdgeInsets.all(10.0),
             shape: CircleBorder(),
           ),
-        )
+        ),
       ],
     );
   }
