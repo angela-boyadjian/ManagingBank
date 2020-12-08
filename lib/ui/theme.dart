@@ -12,17 +12,22 @@ final darkTheme = ThemeData(
   brightness: Brightness.dark,
   backgroundColor: const Color(0xFF212121),
   accentColor: const Color(0xFF0097A7),
-  floatingActionButtonTheme: FloatingActionButtonThemeData(foregroundColor: Colors.black),
+  floatingActionButtonTheme:
+      FloatingActionButtonThemeData(foregroundColor: Colors.black),
   dividerColor: Colors.white,
 );
 
 final lightTheme = ThemeData(
-  textTheme: GoogleFonts.ubuntuTextTheme(),
+  textTheme: GoogleFonts.ubuntuTextTheme().apply(
+    bodyColor: Color(0xFF242461),
+    displayColor: Color(0xFF242461),
+  ),
   primarySwatch: Colors.blueGrey,
-  primaryColor: Color(0xFF5353e0),
+  primaryColor: Color(0xFF5353E0),
   brightness: Brightness.light,
-  backgroundColor: const Color(0xFFFFFFFE),
+  backgroundColor: const Color(0xFFFCFCFC),
   accentColor: const Color(0xFFFFAC2F),
-  floatingActionButtonTheme: FloatingActionButtonThemeData(foregroundColor: Colors.deepOrange),
+  floatingActionButtonTheme:
+      FloatingActionButtonThemeData(foregroundColor: Colors.deepOrange),
   dividerColor: Colors.black,
 );

@@ -43,12 +43,13 @@ class AppRouter {
           builder: (_) => SettingsScreen(),
         );
       case homeRoute:
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => TabBloc(),
-            child: Frame(),
-          ),
-        );
+        return PageTransition(
+            child: BlocProvider(
+              create: (context) => TabBloc(),
+              child: Frame(),
+            ),
+            type: PageTransitionType.fade,
+            duration: Duration(milliseconds: 400));
       default:
         return null;
     }

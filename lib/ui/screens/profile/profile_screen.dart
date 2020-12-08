@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:mimi/logic/bloc/bloc.dart';
-import 'package:mimi/constants/constants.dart';
+import 'package:mimi/ui/widgets/custom_app_bar.dart';
 
-import 'widgets/avatar.dart';
+import 'widgets/user_card.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key key}) : super(key: key);
@@ -16,73 +16,95 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  Widget _buildAppBar(textTheme) => AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        leading: Container(),
-        centerTitle: true,
-        title: Text('Profile',
-            style: textTheme.headline5.copyWith(color: Colors.white)),
-        actions: [
-          IconButton(
-              icon: Icon(FontAwesomeIcons.cog, color: Colors.white),
-              onPressed: () => Navigator.pushNamed(context, settingsRoute)),
-        ],
+  Widget _horizontalLine() => Container(
+        width: MediaQuery.of(context).size.width,
+        height: 0.88,
+        color: Color(0xFFEEEEFC),
       );
 
-  Widget _buildBottomBar() => BottomAppBar(
+  Widget _buildButton(String text, IconData icon) => FlatButton(
         color: Colors.transparent,
-        elevation: 0,
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Material(
-            elevation: 5.0,
-            borderRadius: BorderRadius.circular(30.0),
-            color: Colors.redAccent,
-            child: MaterialButton(
-              minWidth: MediaQuery.of(context).size.width,
-              onPressed: () => {},
-              child: Text(
-                'EDIT',
-                textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6
-                    .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
+        splashColor: Colors.black26,
+        onPressed: () {},
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Icon(icon, color: Theme.of(context).primaryColor),
             ),
-          ),
+            SizedBox(width: 20.0),
+            Text(
+              text,
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle1
+                  .copyWith(fontSize: 14.0, fontWeight: FontWeight.w300),
+            ),
+          ],
         ),
       );
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     final user = context.select((UserBloc bloc) => bloc.state.user);
     return Scaffold(
-      appBar: _buildAppBar(textTheme),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 40.0),
-                child: Avatar(url: user?.photo),
-              ),
-              SizedBox(height: 20.0),
-              Text(user?.name ?? '',
-                  style: textTheme.headline5
-                      .copyWith(fontWeight: FontWeight.bold)),
-              SizedBox(height: 20.0),
-              Text(user?.email ?? '', style: textTheme.headline6),
-              SizedBox(height: 20.0),
-              Text(user?.bio ?? '', style: textTheme.headline6),
-            ],
+      backgroundColor: Color(0xFFFCFCFC),
+      appBar: CustomAppBar("Mon compte"),
+      body: Column(
+        children: [
+          SizedBox(height: 10.0),
+          Flexible(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: UserCard(),
+            ),
           ),
-        ),
+          Flexible(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: _buildButton("FAQ", FontAwesomeIcons.questionCircle),
+            ),
+          ),
+          _horizontalLine(),
+          Flexible(
+            flex: 2,
+            child: _buildButton("Contact", FontAwesomeIcons.commentAlt),
+          ),
+          _horizontalLine(),
+          Flexible(
+            flex: 2,
+            child: _buildButton("À propos", FontAwesomeIcons.bars),
+          ),
+          _horizontalLine(),
+          Flexible(
+            flex: 2,
+            child: FlatButton(
+              color: Colors.transparent,
+              splashColor: Colors.black26,
+              onPressed: () {},
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Icon(FontAwesomeIcons.signOutAlt,
+                        color: Color(0xFFFF4848)),
+                  ),
+                  SizedBox(width: 20.0),
+                  Text(
+                    "Se déconnecter",
+                    style: Theme.of(context).textTheme.subtitle1.copyWith(
+                        color: Color(0xFFFF4848),
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w300),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
-      bottomNavigationBar: _buildBottomBar(),
     );
   }
 }
