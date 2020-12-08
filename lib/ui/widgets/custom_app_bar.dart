@@ -10,7 +10,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
   @override
-  final Size preferredSize; // default is 56.0
+  final Size preferredSize;
 
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
@@ -30,12 +30,27 @@ class _CustomAppBarState extends State<CustomAppBar> {
               onPressed: () => Navigator.of(context).pop())
           : Container(),
       centerTitle: true,
-      title: Text(widget.title,
-          style: textTheme.headline5.copyWith(fontWeight: FontWeight.bold)),
+      title: Text(
+        widget.title,
+        style: textTheme.headline5.copyWith(fontWeight: FontWeight.bold),
+      ),
       actions: [
-        IconButton(
-            icon: Icon(FontAwesomeIcons.cog, color: Color(0xFF242461)),
-            onPressed: () => {}),
+        Container(
+          padding: const EdgeInsets.only(right: 15.0),
+          height: 55,
+          width: 55,
+          child: RawMaterialButton(
+            onPressed: () {},
+            elevation: 5.0,
+            fillColor: Theme.of(context).primaryColor,
+            child: Icon(
+              FontAwesomeIcons.bell,
+              size: 20.0,
+            ),
+            padding: EdgeInsets.all(10.0),
+            shape: CircleBorder(),
+          ),
+        )
       ],
     );
   }
