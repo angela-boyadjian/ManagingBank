@@ -81,16 +81,19 @@ class TransactionCard extends StatelessWidget {
                   .subtitle1
                   .copyWith(fontSize: 14.0, fontWeight: FontWeight.w500),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 3.0),
-              child: Text(
-                'TVA 10%',
-                style: Theme.of(context).textTheme.subtitle1.copyWith(
-                    fontSize: 10.0,
-                    fontWeight: FontWeight.w300,
-                    color: Color.fromRGBO(36, 36, 97, 0.6)),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 3.0),
+                child: Text(
+                  'TVA 10%',
+                  style: Theme.of(context).textTheme.subtitle1.copyWith(
+                      fontSize: 10.0,
+                      fontWeight: FontWeight.w300,
+                      color: Color.fromRGBO(36, 36, 97, 0.6)),
+                ),
               ),
             ),
+            _buildStatusCard(context),
           ],
         ),
       ],
@@ -102,7 +105,6 @@ class TransactionCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Icon(Icons.more_horiz, color: Theme.of(context).primaryColor),
         _buildStatusCard(context),
       ],
     );
@@ -112,15 +114,23 @@ class TransactionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: _buildDate(context),
-      title: Text(
-        "Bricomarché",
-        style: Theme.of(context)
-            .textTheme
-            .headline6
-            .copyWith(fontWeight: FontWeight.bold, fontSize: 14.0),
+      title: Row(
+        // crossAxisAlignment: CrossAxisAlignment.baseline,
+        children: [
+          Expanded(
+            child: Text(
+              "Bricomarché",
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  .copyWith(fontWeight: FontWeight.bold, fontSize: 14.0),
+            ),
+          ),
+          Icon(Icons.more_horiz, color: Theme.of(context).primaryColor),
+        ],
       ),
       subtitle: _buildSubtitle(context),
-      trailing: _buildTrailingIcons(context),
+      // trailing: _buildTrailingIcons(context),
       isThreeLine: true,
     );
   }
