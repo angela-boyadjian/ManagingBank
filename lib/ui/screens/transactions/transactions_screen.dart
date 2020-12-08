@@ -29,7 +29,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
           Flexible(
             flex: 1,
             child: Align(
-              alignment: FractionalOffset(0.1, 0.5),
+              alignment: FractionalOffset(0.18, 0.5),
               child: Text(
                 "-2 567, 92 €",
                 style: Theme.of(context).textTheme.headline3.copyWith(
