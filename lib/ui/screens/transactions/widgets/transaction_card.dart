@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'status_card.dart';
+
 class TransactionCard extends StatelessWidget {
   Widget _buildDate(context) {
     return Container(
@@ -23,36 +25,6 @@ class TransactionCard extends StatelessWidget {
                     .subtitle2
                     .copyWith(fontSize: 10.0)),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStatusCard(context) {
-    return Container(
-      height: 16.0,
-      width: 46.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4.0),
-        gradient: LinearGradient(
-            colors: [Color(0xFF98E891), Color(0xFFBFF1BB)],
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter),
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromRGBO(36, 36, 97, 0.16),
-            offset: Offset(0.0, 4.0), //(x,y)
-            blurRadius: 2.0,
-          ),
-        ],
-      ),
-      child: Center(
-        child: Text(
-          "Validé",
-          style: Theme.of(context).textTheme.subtitle1.copyWith(
-              color: Color(0xFF32BA26),
-              fontSize: 10.0,
-              fontWeight: FontWeight.w500),
         ),
       ),
     );
@@ -93,19 +65,9 @@ class TransactionCard extends StatelessWidget {
                 ),
               ),
             ),
-            _buildStatusCard(context),
+            StatusCard(isValidate: false),
           ],
         ),
-      ],
-    );
-  }
-
-  Widget _buildTrailingIcons(context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        _buildStatusCard(context),
       ],
     );
   }
@@ -115,7 +77,6 @@ class TransactionCard extends StatelessWidget {
     return ListTile(
       leading: _buildDate(context),
       title: Row(
-        // crossAxisAlignment: CrossAxisAlignment.baseline,
         children: [
           Expanded(
             child: Text(
@@ -130,7 +91,6 @@ class TransactionCard extends StatelessWidget {
         ],
       ),
       subtitle: _buildSubtitle(context),
-      // trailing: _buildTrailingIcons(context),
       isThreeLine: true,
     );
   }

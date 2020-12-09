@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
 
@@ -42,6 +43,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
           Flexible(
             flex: 4,
             child: Container(
+              color: Colors.white,
               child: ListView.separated(
                 scrollDirection: Axis.vertical,
                 itemCount: 6,
@@ -58,9 +60,20 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
               ),
             ),
           ),
-          // Spacer(flex: 2),
-          // Spacer(flex: 2),
         ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.transparent,
+        elevation: 0.0,
+        child: null,
+      ),
+      floatingActionButton: Container(
+        width: 64,
+        height: 64,
+        child: FloatingActionButton(
+            child: Icon(FontAwesomeIcons.search, color: Colors.white, size: 22),
+            backgroundColor: Theme.of(context).primaryColor,
+            onPressed: () {}),
       ),
     );
   }
