@@ -32,7 +32,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
       centerTitle: true,
       title: Text(
         widget.title,
-        style: textTheme.headline5.copyWith(fontWeight: FontWeight.bold),
+        style: textTheme.headline5
+            .copyWith(fontSize: 20, fontWeight: FontWeight.bold),
       ),
       actions: [
         Container(

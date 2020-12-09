@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class ToValidateCard extends StatelessWidget {
+class PendingCard extends StatelessWidget {
+  final bool isTransaction;
+
+  PendingCard({this.isTransaction});
+
   Widget _buildNumberButton(context) {
     return Container(
       padding: const EdgeInsets.only(left: 20.0),
@@ -27,9 +31,10 @@ class ToValidateCard extends StatelessWidget {
     return Row(
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: 5.0),
+          padding:
+              EdgeInsets.only(left: isTransaction ? 0.0 : 12.0, bottom: 5.0),
           child: Text(
-            "Transaction ",
+            isTransaction ? "Transaction " : "Déclaration ",
             style: Theme.of(context)
                 .textTheme
                 .headline6
@@ -39,7 +44,7 @@ class ToValidateCard extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 5.0),
           child: Text(
-            "à valider",
+            isTransaction ? "à valider" : "à compléter",
             style: Theme.of(context)
                 .textTheme
                 .headline6
@@ -77,12 +82,16 @@ class ToValidateCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _buildText(context),
-                    Text(
-                      "Aujourd'hui 9:00",
-                      style: Theme.of(context).textTheme.subtitle1.copyWith(
-                          color: Color(0xFF242461).withOpacity(0.6),
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w300),
+                    Padding(
+                      padding:
+                          EdgeInsets.only(left: isTransaction ? 0.0 : 12.0),
+                      child: Text(
+                        "Aujourd'hui 9:00",
+                        style: Theme.of(context).textTheme.subtitle1.copyWith(
+                            color: Color(0xFF242461).withOpacity(0.6),
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w300),
+                      ),
                     ),
                   ],
                 ),

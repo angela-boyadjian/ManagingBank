@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
+import 'package:mimi/ui/widgets/pending_card.dart';
 
-import 'widgets/to_validate_card.dart';
 import 'widgets/transaction_card.dart';
 
 class TransactionsScreen extends StatefulWidget {
@@ -24,7 +24,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
           Flexible(
             flex: 1,
             child: Center(
-              child: ToValidateCard(),
+              child: PendingCard(isTransaction: true),
             ),
           ),
           Flexible(
