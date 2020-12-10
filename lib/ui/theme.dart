@@ -27,6 +27,8 @@ final lightTheme = ThemeData(
   brightness: Brightness.light,
   backgroundColor: const Color(0xFFFCFCFC),
   accentColor: const Color(0xFFFFAC2F),
+  highlightColor: Color(0xFFEEEEFC),
+  splashColor: Color(0xFFEEEEFC),
   floatingActionButtonTheme:
       FloatingActionButtonThemeData(foregroundColor: Colors.deepOrange),
   dividerColor: Colors.black,
