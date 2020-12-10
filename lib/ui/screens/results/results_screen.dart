@@ -31,93 +31,62 @@ class _ResultsScreenState extends State<ResultsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar("Résultats"),
-      body: Column(
+      body: Stack(
         children: [
-          SizedBox(height: 30.0),
-          // Stack(
-          //   children: [
-          //     Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //       children: [
-          //         Padding(
-          //           padding: const EdgeInsets.only(left: 10.0),
-          //           child: PrevisionCard(
-          //               title: "Prévisionnel recettes", amount: "56 476,98 €"),
-          //         ),
-          //         Padding(
-          //           padding: const EdgeInsets.only(right: 10.0),
-          //           child: PrevisionCard(
-          //               title: "Prévisionnel dépenses", amount: "13 445,25 €"),
-          //         ),
-          //       ],
-          //     ),
-          //     Center(
-          //       child: BlocProvider(
-          //         create: (_) => DropDownCubit(items, 0),
-          //         child: CustomDropDown(),
-          //       ),
-          //     ),
-          //     SizedBox(height: 10.0),
-          //   ],
-          // ),
-          // SizedBox(height: 30.0),
-          Center(
+          Column(
+            children: [
+              Spacer(flex: 1),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: PrevisionCard(
+                        title: "Prévisionnel recettes", amount: "56 476,98 €"),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: PrevisionCard(
+                        title: "Prévisionnel dépenses", amount: "13 445,25 €"),
+                  ),
+                ],
+              ),
+              SizedBox(height: 30.0),
+              Flexible(
+                flex: 1,
+                child: ResultCard(
+                    title: "Dépenses",
+                    amount: "2 567,92 €",
+                    color: Color(0xFFFDAF3A)),
+              ),
+              Flexible(
+                flex: 1,
+                child: ResultCard(
+                    title: "Recettes",
+                    amount: "10 546,12 €",
+                    color: Color(0xFF48D73C)),
+              ),
+              Flexible(
+                flex: 1,
+                child: ResultCard(
+                    title: "Trésorerie",
+                    amount: "12 546,26 €",
+                    color: Color(0xFF5353E0)),
+              ),
+              Spacer(flex: 1),
+            ],
+          ),
+          Positioned(
+            top: 20,
+            right: MediaQuery.of(context).size.width -
+                MediaQuery.of(context).size.width * 0.96,
             child: BlocProvider(
               create: (_) => DropDownCubit(items, 0),
               child: CustomDropDown(),
             ),
           ),
-          SizedBox(height: 10.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: PrevisionCard(
-                    title: "Prévisionnel recettes", amount: "56 476,98 €"),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: PrevisionCard(
-                    title: "Prévisionnel dépenses", amount: "13 445,25 €"),
-              ),
-            ],
-          ),
-          SizedBox(height: 30.0),
-          // Spacer(flex: 1),
-          Flexible(
-            flex: 1,
-            child: ResultCard(
-                title: "Dépenses",
-                amount: "2 567,92 €",
-                color: Color(0xFFFDAF3A)),
-          ),
-          Flexible(
-            flex: 1,
-            child: ResultCard(
-                title: "Recettes",
-                amount: "10 546,12 €",
-                color: Color(0xFF48D73C)),
-          ),
-          Flexible(
-            flex: 1,
-            child: ResultCard(
-                title: "Trésorerie",
-                amount: "12 546,26 €",
-                color: Color(0xFF5353E0)),
-          ),
-          Spacer(flex: 1),
         ],
       ),
     );
   }
-}
-
-class FavouriteFoodModel {
-  final String foodName;
-  final double calories;
-  FavouriteFoodModel({
-    this.foodName,
-    this.calories,
-  });
 }
