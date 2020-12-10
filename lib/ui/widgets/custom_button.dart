@@ -23,12 +23,14 @@ class CustomButton extends StatelessWidget {
               end: Alignment.bottomCenter),
         ),
         child: MaterialButton(
-            minWidth: MediaQuery.of(context).size.width - 80,
-            height: 55.0,
-            onPressed: onPressed,
-            child: Text(text,
-                style:
-                    theme.textTheme.subtitle1.copyWith(color: Colors.white))),
+          minWidth: MediaQuery.of(context).size.width - 80,
+          height: 55.0,
+          onPressed: onPressed,
+          child: Text(
+            text,
+            style: theme.textTheme.subtitle1.copyWith(color: Colors.white),
+          ),
+        ),
       ),
     );
   }

@@ -4,11 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:mimi/logic/bloc/bloc.dart';
 import 'package:mimi/constants/constants.dart';
+import 'package:mimi/logic/cubit/cubit.dart';
 import 'package:mimi/ui/screens/results/results_screen.dart';
 import 'package:mimi/ui/screens/profile/profile_screen.dart';
 import 'package:mimi/ui/screens/declarations/declarations_screen.dart';
 import 'package:mimi/ui/screens/transactions/transactions_screen.dart';
 
+import 'drop_down/drop_down_model.dart';
 import 'nav_bar.dart';
 
 class Frame extends StatefulWidget {
@@ -45,6 +47,12 @@ class _FrameState extends State<Frame> with SingleTickerProviderStateMixin {
         duration: Duration(milliseconds: 250), curve: Curves.easeInOut);
   }
 
+  final List<DropDownModel> items = [
+    DropDownModel(text: "Ce mois", selected: true),
+    DropDownModel(text: "Ce trimestre", selected: false),
+    DropDownModel(text: "Cette année"),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TabBloc, TabScreens>(
@@ -54,7 +62,10 @@ class _FrameState extends State<Frame> with SingleTickerProviderStateMixin {
           body: PageView(
             children: <Widget>[
               TransactionsScreen(),
-              ResultsScreen(),
+              BlocProvider(
+                create: (_) => DropDownCubit(items, 0),
+                child: ResultsScreen(),
+              ),
               DeclarationsScreen(),
               ProfileScreen(),
             ],
