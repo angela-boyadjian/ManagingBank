@@ -25,6 +25,7 @@ final lightTheme = ThemeData(
   primarySwatch: Colors.blueGrey,
   primaryColor: Color(0xFF5353E0),
   brightness: Brightness.light,
+  unselectedWidgetColor: Color(0xFFA9A9EF),
   backgroundColor: const Color(0xFFFCFCFC),
   accentColor: const Color(0xFFFFAC2F),
   highlightColor: Color(0xFFEEEEFC),

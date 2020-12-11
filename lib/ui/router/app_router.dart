@@ -8,6 +8,7 @@ import 'package:mimi/ui/widgets/frame.dart';
 import 'package:mimi/constants/constants.dart';
 import 'package:mimi/ui/screens/login/login_screen.dart';
 import 'package:mimi/ui/screens/login/reset_screen.dart';
+import 'package:mimi/ui/screens/search/search_screen.dart';
 import 'package:mimi/ui/screens/splash/splash_screen.dart';
 import 'package:mimi/ui/screens/profile/profile_screen.dart';
 import 'package:mimi/ui/screens/settings/settings_screen.dart';
@@ -31,6 +32,12 @@ class AppRouter {
       case resetRoute:
         return PageTransition(
           child: ResetScreen(),
+          type: PageTransitionType.fade,
+          duration: Duration(milliseconds: 400),
+        );
+      case searchRoute:
+        return PageTransition(
+          child: SearchScreen(),
           type: PageTransitionType.fade,
           duration: Duration(milliseconds: 400),
         );

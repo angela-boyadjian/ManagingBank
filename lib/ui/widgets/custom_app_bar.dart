@@ -4,9 +4,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final bool previous;
+  final bool cancel;
   final String title;
 
-  CustomAppBar(this.title, {Key key, this.previous = false})
+  CustomAppBar(this.title,
+      {Key key, this.previous = false, this.cancel = false})
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
   @override
@@ -36,22 +38,26 @@ class _CustomAppBarState extends State<CustomAppBar> {
             .copyWith(fontSize: 20, fontWeight: FontWeight.bold),
       ),
       actions: [
-        Container(
-          padding: const EdgeInsets.only(right: 15.0),
-          height: 55,
-          width: 55,
-          child: RawMaterialButton(
-            onPressed: () {},
-            elevation: 8.0,
-            fillColor: Theme.of(context).primaryColor,
-            child: Icon(
-              FontAwesomeIcons.bell,
-              size: 20.0,
-            ),
-            padding: EdgeInsets.all(10.0),
-            shape: CircleBorder(),
-          ),
-        ),
+        widget.cancel
+            ? IconButton(
+                icon: Icon(FontAwesomeIcons.times, color: Color(0xFF242461)),
+                onPressed: () => Navigator.of(context).pop())
+            : Container(
+                padding: const EdgeInsets.only(right: 15.0),
+                height: 55,
+                width: 55,
+                child: RawMaterialButton(
+                  onPressed: () {},
+                  elevation: 8.0,
+                  fillColor: Theme.of(context).primaryColor,
+                  child: Icon(
+                    FontAwesomeIcons.bell,
+                    size: 20.0,
+                  ),
+                  padding: EdgeInsets.all(10.0),
+                  shape: CircleBorder(),
+                ),
+              ),
       ],
     );
   }
