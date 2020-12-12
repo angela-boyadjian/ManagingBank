@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
 
 class DatePicker extends StatefulWidget {
   DatePicker({Key key}) : super(key: key);
@@ -8,7 +9,46 @@ class DatePicker extends StatefulWidget {
   _DatePickerState createState() => _DatePickerState();
 }
 
+class DatePeriod {
+  /// Start of this period.
+  final DateTime start;
+
+  /// End of this period.
+  final DateTime end;
+
+  ///
+  const DatePeriod(this.start, this.end)
+      : assert(start != null),
+        assert(end != null);
+}
+
 class _DatePickerState extends State<DatePicker> {
+  DateTime _firstDate;
+  DateTime _lastDate;
+  DatePeriod _selectedPeriod;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _firstDate = DateTime.now().subtract(Duration(days: 345));
+    _lastDate = DateTime.now().add(Duration(days: 345));
+
+    DateTime selectedPeriodStart = DateTime.now().subtract(Duration(days: 4));
+    DateTime selectedPeriodEnd = DateTime.now().add(Duration(days: 8));
+    _selectedPeriod = DatePeriod(selectedPeriodStart, selectedPeriodEnd);
+  }
+
+  _showDatePicker() async {
+    return await DateRangePicker.showDatePicker(
+      context: context,
+      initialFirstDate: new DateTime.now(),
+      initialLastDate: (new DateTime.now()).add(new Duration(days: 7)),
+      firstDate: new DateTime(2015),
+      lastDate: new DateTime(2022),
+    );
+  }
+
   Widget _buildBar() {
     return Container(
       width: MediaQuery.of(context).size.width - 30,
@@ -22,7 +62,7 @@ class _DatePickerState extends State<DatePicker> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         height: 40.0,
-        onPressed: () => {},
+        onPressed: () => _showDatePicker(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
