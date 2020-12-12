@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:mimi/constants/constants.dart';
+
 class ResultCard extends StatefulWidget {
   final String title;
   final String amount;
   final Color color;
+  final String route;
 
-  ResultCard(
-      {Key key,
-      @required this.title,
-      @required this.amount,
-      @required this.color})
-      : super(key: key);
+  ResultCard({
+    Key key,
+    @required this.title,
+    @required this.amount,
+    @required this.color,
+    @required this.route,
+  }) : super(key: key);
 
   @override
   _ResultCardState createState() => _ResultCardState();
@@ -37,7 +41,7 @@ class _ResultCardState extends State<ResultCard> {
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: () => Navigator.of(context).pushNamed(widget.route),
         child: Container(
           width: MediaQuery.of(context).size.width - 30.0,
           decoration: BoxDecoration(

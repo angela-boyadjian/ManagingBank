@@ -25,6 +25,9 @@ const String loginRoute = '/login';
 const String resetRoute = '/reset';
 const String profileRoute = '/profile';
 const String settingsRoute = '/settings';
+const String revenuesRoute = '/revenues';
+const String treasuryRoute = '/treasury';
+const String spendingsRoute = '/spendings';
 
 // Preferences
 const String themePref = 'theme';

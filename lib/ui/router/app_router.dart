@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -10,7 +9,10 @@ import 'package:mimi/ui/screens/login/login_screen.dart';
 import 'package:mimi/ui/screens/login/reset_screen.dart';
 import 'package:mimi/ui/screens/splash/splash_screen.dart';
 import 'package:mimi/ui/screens/profile/profile_screen.dart';
+import 'package:mimi/ui/screens/treasury/treasury_screen.dart';
+import 'package:mimi/ui/screens/revenues/revenues_screen.dart';
 import 'package:mimi/ui/screens/settings/settings_screen.dart';
+import 'package:mimi/ui/screens/spendings/spendings_screen.dart';
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings settings) {
@@ -37,6 +39,24 @@ class AppRouter {
       case profileRoute:
         return MaterialPageRoute(
           builder: (_) => ProfileScreen(),
+        );
+      case revenuesRoute:
+        return PageTransition(
+          child: RevenuesScreen(),
+          type: PageTransitionType.rightToLeftWithFade,
+          duration: Duration(milliseconds: 400),
+        );
+      case treasuryRoute:
+        return PageTransition(
+          child: TreasuryScreen(),
+          type: PageTransitionType.rightToLeftWithFade,
+          duration: Duration(milliseconds: 400),
+        );
+      case spendingsRoute:
+        return PageTransition(
+          child: SpendingsScreen(),
+          type: PageTransitionType.rightToLeftWithFade,
+          duration: Duration(milliseconds: 400),
         );
       case settingsRoute:
         return MaterialPageRoute(

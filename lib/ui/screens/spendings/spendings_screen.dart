@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mimi/constants/constants.dart';
 
+import 'package:mimi/logic/cubit/cubit.dart';
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
 import 'package:mimi/ui/widgets/drop_down/drop_down_model.dart';
 import 'package:mimi/ui/widgets/drop_down/custom_drop_down.dart';
-import 'package:mimi/logic/cubit/drop_down/drop_down_cubit.dart';
-import 'package:mimi/ui/screens/results/widgets/result_card.dart';
 import 'package:mimi/ui/screens/results/widgets/prevision_card.dart';
 
-class ResultsScreen extends StatefulWidget {
-  ResultsScreen({Key key}) : super(key: key);
+class SpendingsScreen extends StatefulWidget {
+  SpendingsScreen({Key key}) : super(key: key);
 
   @override
-  _ResultsScreenState createState() => _ResultsScreenState();
+  _SpendingsScreenState createState() => _SpendingsScreenState();
 }
 
-class _ResultsScreenState extends State<ResultsScreen> {
+class _SpendingsScreenState extends State<SpendingsScreen> {
   final List<DropDownModel> items = [
     DropDownModel(text: "Ce mois", selected: true),
     DropDownModel(text: "Ce trimestre", selected: false),
@@ -24,14 +22,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
   ];
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar("Résultats"),
+      appBar: CustomAppBar("Dépenses", previous: true),
       body: Stack(
         children: [
           Column(
@@ -53,34 +46,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                 ],
               ),
               SizedBox(height: 30.0),
-              Flexible(
-                flex: 1,
-                child: ResultCard(
-                  title: "Dépenses",
-                  amount: "2 567,92 €",
-                  color: Color(0xFFFDAF3A),
-                  route: spendingsRoute,
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: ResultCard(
-                  title: "Recettes",
-                  amount: "10 546,12 €",
-                  color: Color(0xFF48D73C),
-                  route: revenuesRoute,
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: ResultCard(
-                  title: "Trésorerie",
-                  amount: "12 546,26 €",
-                  color: Color(0xFF5353E0),
-                  route: treasuryRoute,
-                ),
-              ),
-              Spacer(flex: 1),
+              Spacer(flex: 4),
             ],
           ),
           Positioned(
