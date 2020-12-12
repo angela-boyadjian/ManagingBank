@@ -6,6 +6,7 @@ import 'package:mimi/ui/widgets/custom_app_bar.dart';
 import 'package:mimi/ui/widgets/drop_down/drop_down_model.dart';
 import 'package:mimi/ui/widgets/drop_down/custom_drop_down.dart';
 import 'package:mimi/ui/screens/results/widgets/prevision_card.dart';
+import 'package:mimi/ui/widgets/growth_card.dart';
 
 class RevenuesScreen extends StatefulWidget {
   RevenuesScreen({Key key}) : super(key: key);
@@ -21,6 +22,23 @@ class _RevenuesScreenState extends State<RevenuesScreen> {
     DropDownModel(text: "Cette année"),
   ];
 
+  Widget _buildCards(
+      String fTitle, String fAmount, String sTile, String sAmount) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: PrevisionCard(title: fTitle, amount: fAmount),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 10.0),
+          child: PrevisionCard(title: sTile, amount: sAmount),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,21 +48,27 @@ class _RevenuesScreenState extends State<RevenuesScreen> {
           Column(
             children: [
               Spacer(flex: 1),
+              SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: PrevisionCard(
-                        title: "Prévisionnel recettes", amount: "56 476,98 €"),
+                  Text(
+                    "10 587,12 €",
+                    style: Theme.of(context).textTheme.headline1.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF48D73C),
+                          fontSize: 36,
+                        ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10.0),
-                    child: PrevisionCard(
-                        title: "Prévisionnel dépenses", amount: "13 445,25 €"),
-                  ),
+                  SizedBox(width: 15),
+                  GrowthCard(),
                 ],
               ),
+              SizedBox(height: 30.0),
+              _buildCards("Espèces", "527,31 €", "Chèques", "2 003,79 €"),
+              SizedBox(height: 20.0),
+              _buildCards(
+                  "Virements", "5 484,05 €", "Carte Bancaires", "2 531,10€"),
               SizedBox(height: 30.0),
               Spacer(flex: 4),
             ],

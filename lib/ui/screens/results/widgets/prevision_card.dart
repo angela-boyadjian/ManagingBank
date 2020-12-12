@@ -16,9 +16,9 @@ class PrevisionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey,
+            color: Colors.grey[400],
             offset: Offset(0.0, 5.0),
-            blurRadius: 6.0,
+            blurRadius: 4.0,
           ),
         ],
         gradient: LinearGradient(
@@ -37,6 +37,7 @@ class PrevisionCard extends StatelessWidget {
                 .subtitle1
                 .copyWith(fontSize: 14.0, color: Colors.white),
           ),
+          SizedBox(height: 5.0),
           Text(
             amount,
             style: Theme.of(context).textTheme.subtitle1.copyWith(
