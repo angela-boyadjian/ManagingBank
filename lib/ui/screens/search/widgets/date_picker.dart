@@ -87,6 +87,10 @@ class _DatePickerState extends State<DatePicker> {
   }
 
   Widget _buildCalendar() {
+    DecorationImage circleImg = DecorationImage(
+        image: AssetImage("assets/images/calendar_bg.png"),
+        fit: BoxFit.contain);
+
     return BlocBuilder<CalendarCubit, CalendarState>(
       builder: (context, state) {
         return AnimatedContainer(
@@ -134,13 +138,31 @@ class _DatePickerState extends State<DatePicker> {
                 selectedPeriodStartTextStyle: TextStyle(color: Colors.white),
                 selectedPeriodEndTextStyle: TextStyle(color: Colors.white),
                 selectedPeriodLastDecoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  shape: BoxShape.circle,
-                ),
+                    color: Theme.of(context).highlightColor,
+                    image: circleImg,
+                    gradient: LinearGradient(colors: [
+                      Theme.of(context).highlightColor,
+                      Colors.transparent
+                    ], stops: [
+                      0.5,
+                      0.5
+                    ]),
+                    borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(23.0),
+                        bottomRight: Radius.circular(23.0))),
                 selectedPeriodStartDecoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Theme.of(context).primaryColor,
-                ),
+                    color: Theme.of(context).highlightColor,
+                    image: circleImg,
+                    gradient: LinearGradient(colors: [
+                      Colors.transparent,
+                      Theme.of(context).highlightColor,
+                    ], stops: [
+                      0.5,
+                      0.5
+                    ]),
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(23.0),
+                        bottomLeft: Radius.circular(23.0))),
                 selectedPeriodMiddleDecoration: BoxDecoration(
                     color: Theme.of(context).highlightColor,
                     shape: BoxShape.rectangle),
