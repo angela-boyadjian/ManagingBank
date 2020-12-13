@@ -23,6 +23,7 @@ const String splashRoute = '/';
 const String homeRoute = '/home';
 const String loginRoute = '/login';
 const String resetRoute = '/reset';
+const String searchRoute = '/search';
 const String profileRoute = '/profile';
 const String settingsRoute = '/settings';
 const String revenuesRoute = '/revenues';
@@ -31,3 +32,7 @@ const String spendingsRoute = '/spendings';
 
 // Preferences
 const String themePref = 'theme';
+
+// Numbers
+const double min = 0;
+const double max = 5000;

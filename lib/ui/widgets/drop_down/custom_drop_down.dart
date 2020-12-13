@@ -13,8 +13,6 @@ class CustomDropDown extends StatefulWidget {
 }
 
 class _CustomDropDownState extends State<CustomDropDown> {
-  _CustomDropDownState();
-
   Widget _buildBar(state) {
     return Container(
       width: MediaQuery.of(context).size.width - 30,

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:mimi/ui/widgets/custom_app_bar.dart';
+import 'package:mimi/constants/constants.dart';
 import 'package:mimi/ui/widgets/pending_card.dart';
+import 'package:mimi/ui/widgets/custom_app_bar.dart';
 
 import 'widgets/transaction_card.dart';
 
@@ -73,7 +74,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
         child: FloatingActionButton(
             child: Icon(FontAwesomeIcons.search, color: Colors.white, size: 22),
             backgroundColor: Theme.of(context).primaryColor,
-            onPressed: () {}),
+            onPressed: () => Navigator.of(context).pushNamed(searchRoute)),
       ),
     );
   }
