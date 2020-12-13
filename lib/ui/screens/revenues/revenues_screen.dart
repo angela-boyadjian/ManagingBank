@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mimi/ui/screens/revenues/widgets/percentage_indicator.dart';
 
 import 'package:mimi/logic/cubit/cubit.dart';
+import 'package:mimi/ui/widgets/growth_card.dart';
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
 import 'package:mimi/ui/widgets/drop_down/drop_down_model.dart';
 import 'package:mimi/ui/widgets/drop_down/custom_drop_down.dart';
 import 'package:mimi/ui/screens/results/widgets/prevision_card.dart';
-import 'package:mimi/ui/widgets/growth_card.dart';
+
+import 'widgets/percentage_indicator.dart';
 
 class RevenuesScreen extends StatefulWidget {
   RevenuesScreen({Key key}) : super(key: key);
@@ -47,8 +50,7 @@ class _RevenuesScreenState extends State<RevenuesScreen> {
         children: [
           Column(
             children: [
-              Spacer(flex: 1),
-              SizedBox(height: 30),
+              Spacer(flex: 2),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -70,7 +72,23 @@ class _RevenuesScreenState extends State<RevenuesScreen> {
               _buildCards(
                   "Virements", "5 484,05 €", "Carte Bancaires", "2 531,10€"),
               SizedBox(height: 30.0),
-              Spacer(flex: 4),
+              Flexible(
+                flex: 1,
+                child: PercentageIndicator("Espèces", "5%", 0.05),
+              ),
+              Flexible(
+                flex: 1,
+                child: PercentageIndicator("Chèques", "19%", 0.19),
+              ),
+              Flexible(
+                flex: 1,
+                child: PercentageIndicator("Virements", "52%", 0.52),
+              ),
+              Flexible(
+                flex: 1,
+                child: PercentageIndicator("Cartes bancaires", "24%", 0.24),
+              ),
+              Spacer(flex: 1),
             ],
           ),
           Positioned(
