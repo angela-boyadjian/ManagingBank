@@ -50,7 +50,8 @@ class _RevenuesScreenState extends State<RevenuesScreen> {
         children: [
           Column(
             children: [
-              Spacer(flex: 2),
+              Spacer(flex: 1),
+              SizedBox(height: 40.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
