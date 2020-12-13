@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
+import 'package:mimi/logic/cubit/calendar/calendar_cubit.dart';
 
 import 'package:mimi/ui/widgets/custom_button.dart';
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
@@ -150,7 +152,10 @@ class _SearchScreenState extends State<SearchScreen> {
             top: 20,
             right: MediaQuery.of(context).size.width -
                 MediaQuery.of(context).size.width * 0.96,
-            child: DatePicker(),
+            child: BlocProvider<CalendarCubit>(
+              create: (context) => CalendarCubit(),
+              child: DatePicker(),
+            ),
           ),
         ],
       ),

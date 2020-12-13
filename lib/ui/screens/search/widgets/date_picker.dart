@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_date_pickers/flutter_date_pickers.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mimi/logic/cubit/calendar/calendar_cubit.dart';
 
 class DatePicker extends StatefulWidget {
   DatePicker({Key key}) : super(key: key);
@@ -12,8 +14,6 @@ class DatePicker extends StatefulWidget {
 class _DatePickerState extends State<DatePicker> {
   DateTime _firstDate;
   DateTime _lastDate;
-  DatePeriod _selectedPeriod;
-  bool _isOpen = false;
 
   @override
   void initState() {
@@ -21,68 +21,77 @@ class _DatePickerState extends State<DatePicker> {
 
     _firstDate = DateTime.now().subtract(Duration(days: 345));
     _lastDate = DateTime.now().add(Duration(days: 345));
-
-    DateTime selectedPeriodStart = DateTime.now().subtract(Duration(days: 4));
-    DateTime selectedPeriodEnd = DateTime.now().add(Duration(days: 8));
-    _selectedPeriod = DatePeriod(selectedPeriodStart, selectedPeriodEnd);
   }
 
-  _showDatePicker() {
-    setState(() {
-      _isOpen = !_isOpen;
-    });
+  String _dateTimeToEUString(DateTime date) {
+    return "${date.day}/${date.month}/${date.year}";
   }
 
-  void _onSelectedDateChanged(DatePeriod newPeriod) {
-    setState(() {
-      _selectedPeriod = newPeriod;
-    });
+  String _datePeriodToString(DatePeriod datePeriod) {
+    if (datePeriod.start.day == datePeriod.end.day &&
+        datePeriod.start.month == datePeriod.end.month &&
+        datePeriod.start.year == datePeriod.end.year)
+      return "Le ${_dateTimeToEUString(datePeriod.start)}";
+    return "Du ${_dateTimeToEUString(datePeriod.start)} au ${_dateTimeToEUString(datePeriod.end)}";
   }
 
   Widget _buildBar() {
-    return Column(
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width - 30,
-          decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              border: Border.all(
-                color: Color(0xFFA9A9EF),
-                width: 1.5,
-              ),
-              color: Colors.white),
-          child: MaterialButton(
-            minWidth: MediaQuery.of(context).size.width,
-            height: 40.0,
-            onPressed: () => _showDatePicker(),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Icon(
-                  FontAwesomeIcons.calendar,
-                  color: Color(0xFFA9A9EF),
-                  size: 14.0,
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Text("Selectionnez une date ou période",
+    return Container(
+      width: MediaQuery.of(context).size.width - 30,
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+          border: Border.all(
+            color: Color(0xFFA9A9EF),
+            width: 1.5,
+          ),
+          color: Colors.white),
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        height: 40.0,
+        onPressed: () => BlocProvider.of<CalendarCubit>(context).tapOnBar(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Icon(
+              FontAwesomeIcons.calendar,
+              color: Color(0xFFA9A9EF),
+              size: 14.0,
+            ),
+            BlocBuilder<CalendarCubit, CalendarState>(
+              builder: (context, state) {
+                if (state.firstUse) {
+                  return Text("Selectionnez une date ou période",
                       style: Theme.of(context).textTheme.subtitle1.copyWith(
                           fontSize: 16.0,
                           fontWeight: FontWeight.w300,
-                          color: Color(0xFF242461).withOpacity(0.25))),
-                ),
-                Icon(
-                  FontAwesomeIcons.caretDown,
-                  color: Color(0xFFA9A9EF),
-                  size: 14.0,
-                ),
-              ],
+                          color: Color(0xFF242461).withOpacity(0.25)));
+                } else {
+                  return Text(_datePeriodToString(state.selectedPeriod),
+                      textAlign: TextAlign.left,
+                      style: Theme.of(context).textTheme.subtitle1.copyWith(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w300,
+                          ));
+                }
+              },
             ),
-          ),
+            Icon(
+              FontAwesomeIcons.caretDown,
+              color: Color(0xFFA9A9EF),
+              size: 14.0,
+            ),
+          ],
         ),
-        SizedBox(height: 10.0),
-        AnimatedContainer(
-          height: _isOpen ? 315 : 0,
+      ),
+    );
+  }
+
+  Widget _buildCalendar() {
+    return BlocBuilder<CalendarCubit, CalendarState>(
+      builder: (context, state) {
+        return AnimatedContainer(
+          height:
+              BlocProvider.of<CalendarCubit>(context).state.isOpen ? 315 : 0,
           duration: Duration(milliseconds: 600),
           curve: Curves.easeIn,
           decoration: BoxDecoration(
@@ -99,17 +108,22 @@ class _DatePickerState extends State<DatePicker> {
           child: SingleChildScrollView(
             child: RangePicker(
               datePickerLayoutSettings: DatePickerLayoutSettings(
-                  showPrevMonthEnd: true, showNextMonthStart: true),
-              selectedPeriod: _selectedPeriod,
-              onChanged: _onSelectedDateChanged,
+                  maxDayPickerRowCount: 5,
+                  showPrevMonthEnd: true,
+                  showNextMonthStart: true),
+              selectedPeriod:
+                  BlocProvider.of<CalendarCubit>(context).state.selectedPeriod,
+              onChanged: BlocProvider.of<CalendarCubit>(context).selectPeriod,
               firstDate: _firstDate,
               lastDate: _lastDate,
               datePickerStyles: DatePickerRangeStyles(
+                dayHeaderStyleBuilder: (int dayOfTheWeek) => DayHeaderStyle(
+                  textStyle: TextStyle(color: Color(0xFFCBCBF6)),
+                ),
                 currentDateStyle: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.bold),
                 selectedDateStyle: TextStyle(color: Colors.white),
-                // TODO Get correct color from theme
                 selectedPeriodMiddleTextStyle:
                     TextStyle(color: Color(0xFF242461)),
                 selectedSingleDateDecoration: BoxDecoration(
@@ -137,8 +151,14 @@ class _DatePickerState extends State<DatePicker> {
               ),
             ),
           ),
-        ),
-      ],
+        );
+      },
+    );
+  }
+
+  Widget _buildContainer() {
+    return Column(
+      children: [_buildBar(), SizedBox(height: 10.0), _buildCalendar()],
     );
   }
 
@@ -146,7 +166,7 @@ class _DatePickerState extends State<DatePicker> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _buildBar(),
+        _buildContainer(),
       ],
     );
   }
