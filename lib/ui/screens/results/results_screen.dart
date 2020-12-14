@@ -58,7 +58,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                 child: ResultCard(
                   title: "Dépenses",
                   amount: "2 567,92 €",
-                  color: Color(0xFFFDAF3A),
+                  color: Theme.of(context).accentColor,
                   route: spendingsRoute,
                 ),
               ),
