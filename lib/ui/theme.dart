@@ -27,6 +27,7 @@ final lightTheme = ThemeData(
   brightness: Brightness.light,
   unselectedWidgetColor: Color(0xFFA9A9EF),
   backgroundColor: const Color(0xFFFCFCFC),
+  errorColor: Color(0xFFFF3434),
   accentColor: const Color(0xFFFFAC2F),
   highlightColor: Color(0xFFEEEEFC),
   splashColor: Color(0xFFEEEEFC),
