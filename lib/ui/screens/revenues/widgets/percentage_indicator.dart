@@ -17,9 +17,11 @@ class PercentageIndicator extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.95,
           lineHeight: 8.0,
           percent: _percent,
+          linearGradient: LinearGradient(
+            colors: [Color(0xFF5353E0), Color(0xFF7979DC)],
+          ),
           linearStrokeCap: LinearStrokeCap.roundAll,
           backgroundColor: Theme.of(context).highlightColor,
-          progressColor: Theme.of(context).primaryColor,
         ),
         SizedBox(height: 5),
         Row(
