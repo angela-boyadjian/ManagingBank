@@ -42,8 +42,7 @@ class PercentageIndicator extends StatelessWidget {
               child: Text(
                 _amount,
                 style: Theme.of(context).textTheme.subtitle1.copyWith(
-                    fontSize: 14.0,
-                    color: Theme.of(context).primaryColor.withOpacity(0.6)),
+                    fontSize: 14.0, color: Color(0xFF242461).withOpacity(0.6)),
               ),
             ),
           ],

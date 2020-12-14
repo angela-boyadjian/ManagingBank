@@ -17,7 +17,7 @@ class PaymentCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.80,
+        width: MediaQuery.of(context).size.width * 0.70,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

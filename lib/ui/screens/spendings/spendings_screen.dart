@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:mimi/logic/cubit/cubit.dart';
+import 'package:mimi/ui/screens/spendings/widgets/spendings_card.dart';
 import 'package:mimi/ui/widgets/growth_card.dart';
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
 import 'package:mimi/ui/widgets/drop_down/drop_down_model.dart';
@@ -62,22 +63,31 @@ class _SpendingsScreenState extends State<SpendingsScreen> {
                 ],
               ),
               SizedBox(height: 30.0),
-              Container(
-                height: 100,
+              Flexible(
+                flex: 5,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: _payments.length,
+                  itemCount: _payments.length + 1,
                   itemBuilder: (context, index) {
-                    return PaymentCard(_payments[index].title,
-                        _payments[index].amount, _payments[index].percent);
+                    if (index == _payments.length) return SizedBox(width: 20.0);
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: Column(
+                        children: [
+                          PaymentCard(
+                              _payments[index].title,
+                              _payments[index].amount,
+                              _payments[index].percent),
+                          Flexible(
+                            flex: 4,
+                            child: Center(child: SpendingCard()),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                 ),
               ),
-              // Flexible(
-              //   flex: 1,
-              //   child: PaymentCard("Rémunérations, coti.", "5 306,12 €", 0.25),
-              // ),
-              Spacer(flex: 4),
             ],
           ),
           Positioned(
