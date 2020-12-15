@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mimi/ui/screens/details/widgets/add_category_card.dart';
+import 'package:mimi/ui/screens/details/widgets/detail_section.dart';
 import 'package:mimi/ui/screens/transactions/transactions_screen.dart';
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
 import 'package:mimi/ui/widgets/custom_button.dart';
@@ -134,6 +135,24 @@ class _DetailsScreenState extends State<DetailsScreen> {
     );
   }
 
+  Widget _buildAddDetailButton() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Icon(FontAwesomeIcons.plusCircle,
+            color: Theme.of(context).primaryColor, size: 14.0),
+        SizedBox(width: 8.0),
+        Text(
+          'Ajouter un détail',
+          style: Theme.of(context).textTheme.subtitle1.copyWith(
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 12.0),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,6 +165,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
             SizedBox(height: 20),
             AddCategoryCard(),
             SizedBox(height: 20),
+            DetailSection(widget.transaction.tva, widget.transaction.amount),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: _buildAddDetailButton(),
+            ),
+            SizedBox(height: 20),
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
               child: TextField(
@@ -154,7 +180,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 decoration: _textFieldDecoration("Ajouter une note"),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 40),
             CustomButton(onPressed: () {}, text: "Valider la transaction"),
           ],
         ),
