@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mimi/ui/screens/transactions/transactions_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:mimi/logic/bloc/bloc.dart';
@@ -9,6 +10,7 @@ import 'package:mimi/ui/screens/login/login_screen.dart';
 import 'package:mimi/ui/screens/login/reset_screen.dart';
 import 'package:mimi/ui/screens/search/search_screen.dart';
 import 'package:mimi/ui/screens/splash/splash_screen.dart';
+import 'package:mimi/ui/screens/details/details_screen.dart';
 import 'package:mimi/ui/screens/profile/profile_screen.dart';
 import 'package:mimi/ui/screens/treasury/treasury_screen.dart';
 import 'package:mimi/ui/screens/revenues/revenues_screen.dart';
@@ -63,6 +65,13 @@ class AppRouter {
         return PageTransition(
           child: SpendingsScreen(),
           type: PageTransitionType.rightToLeftWithFade,
+          duration: Duration(milliseconds: 400),
+        );
+      case detailsRoute:
+        TransactionModel transaction = settings.arguments as TransactionModel;
+        return PageTransition(
+          child: DetailsScreen(transaction: transaction),
+          type: PageTransitionType.fade,
           duration: Duration(milliseconds: 400),
         );
       case settingsRoute:

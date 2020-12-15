@@ -17,14 +17,6 @@ class SpendingsScreen extends StatefulWidget {
   _SpendingsScreenState createState() => _SpendingsScreenState();
 }
 
-class PaymentModel {
-  final String title;
-  final String amount;
-  final double percent;
-
-  PaymentModel(this.title, this.amount, this.percent);
-}
-
 class _SpendingsScreenState extends State<SpendingsScreen> {
   final List<DropDownModel> items = [
     DropDownModel(text: "Ce mois", selected: true),
@@ -103,4 +95,13 @@ class _SpendingsScreenState extends State<SpendingsScreen> {
       ),
     );
   }
+}
+
+// FIXME
+class PaymentModel {
+  final String title;
+  final String amount;
+  final double percent;
+
+  PaymentModel(this.title, this.amount, this.percent);
 }

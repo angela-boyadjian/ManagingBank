@@ -25,6 +25,7 @@ const String loginRoute = '/login';
 const String resetRoute = '/reset';
 const String searchRoute = '/search';
 const String profileRoute = '/profile';
+const String detailsRoute = '/details';
 const String settingsRoute = '/settings';
 const String revenuesRoute = '/revenues';
 const String treasuryRoute = '/treasury';
