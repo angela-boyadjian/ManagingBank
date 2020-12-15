@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mimi/ui/screens/details/widgets/add_category_card.dart';
-import 'package:mimi/ui/screens/details/widgets/detail_section.dart';
-import 'package:mimi/ui/screens/transactions/transactions_screen.dart';
+
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
 import 'package:mimi/ui/widgets/custom_button.dart';
+import 'package:mimi/ui/screens/transactions/transactions_screen.dart';
+
+import 'widgets/category_card.dart';
+import 'widgets/detail_section.dart';
+import 'widgets/add_category_card.dart';
 
 class DetailsScreen extends StatefulWidget {
   final TransactionModel transaction;
@@ -160,18 +163,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 20),
+            SizedBox(height: 20.0),
             _getTitle(),
-            SizedBox(height: 20),
-            AddCategoryCard(),
-            SizedBox(height: 20),
+            SizedBox(height: 20.0),
+            CategoryCard(widget.transaction.category),
+            SizedBox(height: 20.0),
             DetailSection(widget.transaction.tva, widget.transaction.amount),
-            SizedBox(height: 20),
+            SizedBox(height: 20.0),
             Padding(
               padding: const EdgeInsets.only(right: 20.0),
               child: _buildAddDetailButton(),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 20.0),
+            AddCategoryCard(),
+            SizedBox(height: 20.0),
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
               child: TextField(
@@ -180,8 +185,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 decoration: _textFieldDecoration("Ajouter une note"),
               ),
             ),
-            SizedBox(height: 40),
-            CustomButton(onPressed: () {}, text: "Valider la transaction"),
+            SizedBox(height: 40.0),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: CustomButton(
+                  onPressed: () {}, text: "Valider la transaction"),
+            ),
           ],
         ),
       ),
