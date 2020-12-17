@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:mimi/constants/constants.dart';
+import 'package:mimi/ui/models/drop_downs.dart';
 import 'package:mimi/ui/widgets/pending_card.dart';
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
 
@@ -15,6 +16,21 @@ class TransactionsScreen extends StatefulWidget {
 }
 
 class _TransactionsScreenState extends State<TransactionsScreen> {
+  final List<TransactionModel> _transactions = [
+    TransactionModel("Prlv Droit de garde Titres", "-100,00 €", "0",
+        "Sans catégorie", "MAI", "03"),
+    TransactionModel("Le Rameau St Denis", "-92,20 €", "10",
+        "Déplacement, missions, réceptions", "MAI", "02"),
+    TransactionModel("Bricomarché", "-54,20 €", "multi-TVA", "Multi-catégories",
+        "MAI", "02"),
+    TransactionModel("Thalys", "-234,45 €", "10",
+        "Déplacement, missions, réceptions", "AVR", "30"),
+    TransactionModel("Prlv Droit de garde Titres", "-100,00 €", "0",
+        "Sans catégorie", "MAI", "03"),
+    TransactionModel("Le Rameau St Denis", "-92,20 €", "10",
+        "Déplacement, missions, réceptions", "MAI", "02"),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,31 +95,3 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
     );
   }
 }
-
-//FIXME
-class TransactionModel {
-  final String name;
-  final String amount;
-  final String tva;
-  final String category;
-  final String month;
-  final String day;
-
-  TransactionModel(
-      this.name, this.amount, this.tva, this.category, this.month, this.day);
-}
-
-final List<TransactionModel> _transactions = [
-  TransactionModel("Prlv Droit de garde Titres", "-100,00 €", "0",
-      "Sans catégorie", "MAI", "03"),
-  TransactionModel("Le Rameau St Denis", "-92,20 €", "10",
-      "Déplacement, missions, réceptions", "MAI", "02"),
-  TransactionModel(
-      "Bricomarché", "-54,20 €", "multi-TVA", "Multi-catégories", "MAI", "02"),
-  TransactionModel("Thalys", "-234,45 €", "10",
-      "Déplacement, missions, réceptions", "AVR", "30"),
-  TransactionModel("Prlv Droit de garde Titres", "-100,00 €", "0",
-      "Sans catégorie", "MAI", "03"),
-  TransactionModel("Le Rameau St Denis", "-92,20 €", "10",
-      "Déplacement, missions, réceptions", "MAI", "02"),
-];

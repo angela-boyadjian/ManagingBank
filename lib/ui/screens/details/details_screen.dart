@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:mimi/ui/models/drop_downs.dart';
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
 import 'package:mimi/ui/widgets/disabled_button.dart';
-import 'package:mimi/ui/screens/transactions/transactions_screen.dart';
 
 import 'widgets/category_card.dart';
 import 'widgets/detail_section.dart';
@@ -43,8 +43,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
       hintText: hintText,
       labelStyle: style,
       hintStyle: style,
+      filled: true,
+      fillColor: Colors.white,
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Color(0xFFA9A9EF)),
+        borderSide: BorderSide(color: Color(0xFFA9A9EF), width: 1.5),
         borderRadius: BorderRadius.circular(10.0),
       ),
       border: OutlineInputBorder(

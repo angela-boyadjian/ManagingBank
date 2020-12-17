@@ -1,4 +1,6 @@
 // Enums
+import 'package:mimi/ui/widgets/drop_down/drop_down_model.dart';
+
 enum TabScreens {
   Transactions,
   Results,

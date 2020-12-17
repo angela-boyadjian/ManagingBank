@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:mimi/constants/constants.dart';
-import '../transactions_screen.dart';
+import 'package:mimi/ui/models/drop_downs.dart';
 
 import 'status_card.dart';
 
