@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 
 import 'widgets/banks_card.dart';
 import 'package:mimi/logic/cubit/cubit.dart';

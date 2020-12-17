@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mimi/ui/screens/transactions/transactions_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:mimi/logic/bloc/bloc.dart';
@@ -16,6 +15,8 @@ import 'package:mimi/ui/screens/treasury/treasury_screen.dart';
 import 'package:mimi/ui/screens/revenues/revenues_screen.dart';
 import 'package:mimi/ui/screens/settings/settings_screen.dart';
 import 'package:mimi/ui/screens/spendings/spendings_screen.dart';
+import 'package:mimi/ui/screens/add_category/add_category_screen.dart';
+import 'package:mimi/ui/screens/transactions/transactions_screen.dart';
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings settings) {
@@ -71,6 +72,12 @@ class AppRouter {
         TransactionModel transaction = settings.arguments as TransactionModel;
         return PageTransition(
           child: DetailsScreen(transaction: transaction),
+          type: PageTransitionType.fade,
+          duration: Duration(milliseconds: 400),
+        );
+      case addCategoryRoute:
+        return PageTransition(
+          child: AddCategoryScreen(),
           type: PageTransitionType.fade,
           duration: Duration(milliseconds: 400),
         );

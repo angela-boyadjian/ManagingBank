@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
-import 'package:mimi/ui/widgets/custom_button.dart';
+import 'package:mimi/ui/widgets/disabled_button.dart';
 import 'package:mimi/ui/screens/transactions/transactions_screen.dart';
 
 import 'widgets/category_card.dart';
@@ -188,8 +188,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
             SizedBox(height: 40.0),
             Padding(
               padding: const EdgeInsets.only(bottom: 20.0),
-              child: CustomButton(
-                  onPressed: () {}, text: "Valider la transaction"),
+              child: DisabledButton(text: "Valider la transaction"),
             ),
           ],
         ),

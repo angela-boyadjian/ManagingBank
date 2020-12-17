@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:mimi/constants/constants.dart';
+
 class AddCategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class AddCategoryCard extends StatelessWidget {
       elevation: 2.0,
       child: InkWell(
         splashColor: Theme.of(context).primaryColor,
-        onTap: () {},
+        onTap: () => Navigator.of(context).pushNamed(addCategoryRoute),
         child: Container(
           width: MediaQuery.of(context).size.width * 0.9,
           height: 100.0,
