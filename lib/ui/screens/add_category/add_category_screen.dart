@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:mimi/logic/cubit/cubit.dart';
+import 'package:mimi/constants/constants.dart';
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
 import 'package:mimi/ui/widgets/disabled_button.dart';
 import 'package:mimi/ui/widgets/drop_down/custom_drop_down.dart';
@@ -51,20 +52,23 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
       );
 
   Widget _buildKnowMoreButton() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Icon(FontAwesomeIcons.questionCircle,
-            color: Theme.of(context).primaryColor, size: 14.0),
-        SizedBox(width: 8.0),
-        Text(
-          'En savoir plus sur les catégories',
-          style: Theme.of(context).textTheme.subtitle1.copyWith(
-              color: Theme.of(context).primaryColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 12.0),
-        ),
-      ],
+    return GestureDetector(
+      onTap: () => Navigator.of(context).pushNamed(categoriesRoute),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Icon(FontAwesomeIcons.questionCircle,
+              color: Theme.of(context).primaryColor, size: 14.0),
+          SizedBox(width: 8.0),
+          Text(
+            'En savoir plus sur les catégories',
+            style: Theme.of(context).textTheme.subtitle1.copyWith(
+                color: Theme.of(context).primaryColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 12.0),
+          ),
+        ],
+      ),
     );
   }
 

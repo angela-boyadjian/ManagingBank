@@ -32,6 +32,7 @@ const String settingsRoute = '/settings';
 const String revenuesRoute = '/revenues';
 const String treasuryRoute = '/treasury';
 const String spendingsRoute = '/spendings';
+const String categoriesRoute = '/categories';
 const String addCategoryRoute = '/add_category';
 
 // Preferences

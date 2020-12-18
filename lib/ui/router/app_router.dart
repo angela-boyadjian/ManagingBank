@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mimi/ui/screens/categories/categories_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:mimi/logic/bloc/bloc.dart';
@@ -78,6 +79,12 @@ class AppRouter {
       case addCategoryRoute:
         return PageTransition(
           child: AddCategoryScreen(),
+          type: PageTransitionType.fade,
+          duration: Duration(milliseconds: 400),
+        );
+      case categoriesRoute:
+        return PageTransition(
+          child: CategoriesScreen(),
           type: PageTransitionType.fade,
           duration: Duration(milliseconds: 400),
         );

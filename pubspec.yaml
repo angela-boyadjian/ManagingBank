@@ -25,6 +25,8 @@ dependencies:
   percent_indicator: ^2.1.8
   flutter_xlider: ^3.4.0
   flutter_date_pickers: ^0.1.8
+  getwidget: ^1.2.4
+
 
   authentication:
     path: lib/repositories/authentication
