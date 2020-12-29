@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:mimi/constants/constants.dart';
+import 'package:mimi/logic/cubit/cubit.dart';
 import 'package:mimi/ui/widgets/custom_button.dart';
 
 class LoginCard extends StatefulWidget {
@@ -141,7 +143,9 @@ class _LoginCardState extends State<LoginCard> {
             child: Padding(
               padding: const EdgeInsets.only(top: 40.0),
               child: CustomButton(
-                  onPressed: () => Navigator.of(context).pushNamed(homeRoute),
+                  onPressed: () => BlocProvider.of<LoginCubit>(context)
+                      .logInWithCredentials(
+                          emailController.text, passwordController.text),
                   text: "Se connecter"),
             ),
           ),

@@ -10,8 +10,8 @@ class User extends Equatable {
   const User({
     @required this.id,
     @required this.email,
-    @required this.name,
-    @required this.photo,
+    this.name,
+    this.photo,
   })  : assert(id != null),
         assert(email != null);
 

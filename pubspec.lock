@@ -448,6 +448,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.3-nullsafety.2"
+  jwt_decoder:
+    dependency: transitive
+    description:
+      name: jwt_decoder
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   loading_indicator:
     dependency: "direct main"
     description:
