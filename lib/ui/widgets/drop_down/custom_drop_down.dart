@@ -46,38 +46,50 @@ class _CustomDropDownState extends State<CustomDropDown> {
     );
   }
 
+  double _maxScrollSize(double itemHeight, double lenght) {
+    double size = lenght * itemHeight;
+    return MediaQuery.of(context).size.height / 2 < size
+        ? itemHeight * 5
+        : size;
+  }
+
   Widget _buildListMenu(state) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 600),
-      curve: Curves.ease,
-      height: state.isOpen ? 60 * state.items.length.toDouble() : 0,
-      width: MediaQuery.of(context).size.width - 30,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            offset: Offset(0.0, 5.0),
-            blurRadius: 6.0,
-          ),
-        ],
+    return SingleChildScrollView(
+      physics: ScrollPhysics(),
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 600),
+        curve: Curves.ease,
+        height: state.isOpen
+            ? _maxScrollSize(60.0, state.items.length.toDouble())
+            : 0,
+        width: MediaQuery.of(context).size.width - 30,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(0.0, 5.0),
+              blurRadius: 6.0,
+            ),
+          ],
+        ),
+        child: ListView.builder(
+            itemCount: state.items.length,
+            itemBuilder: (BuildContext ctxt, int index) {
+              return ListTile(
+                title: Text(state.items[index].text,
+                    style: Theme.of(ctxt).textTheme.subtitle1),
+                trailing: state.selectedIndex == index
+                    ? Icon(FontAwesomeIcons.check,
+                        color: Color(0xFF48D73C), size: 10.0)
+                    : null,
+                onTap: () =>
+                    BlocProvider.of<DropDownCubit>(ctxt).tapOnItem(index),
+                selected: state.items[index].selected,
+              );
+            }),
       ),
-      child: ListView.builder(
-          itemCount: state.items.length,
-          itemBuilder: (BuildContext ctxt, int index) {
-            return ListTile(
-              title: Text(state.items[index].text,
-                  style: Theme.of(ctxt).textTheme.subtitle1),
-              trailing: state.selectedIndex == index
-                  ? Icon(FontAwesomeIcons.check,
-                      color: Color(0xFF48D73C), size: 10.0)
-                  : null,
-              onTap: () =>
-                  BlocProvider.of<DropDownCubit>(ctxt).tapOnItem(index),
-              selected: state.items[index].selected,
-            );
-          }),
     );
   }
 
