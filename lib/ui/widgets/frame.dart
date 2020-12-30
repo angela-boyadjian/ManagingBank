@@ -39,11 +39,16 @@ class _FrameState extends State<Frame> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
-  navBarChangePage(TabScreens tab) {
-    BlocProvider.of<TabBloc>(context).add(TabUpdated(tab));
-    pageController.animateToPage(tab.index,
-        duration: Duration(milliseconds: 250), curve: Curves.easeInOut);
+  navBarChangePage(int index) {
+    BlocProvider.of<TabBloc>(context).add(TabUpdated(TabScreens.values[index]));
+    pageController.jumpToPage(index);
   }
+
+  // TODO Cache page ?
+  // TransactionsScreen t = TransactionsScreen();
+  // ResultsScreen r = ResultsScreen();
+  // DeclarationsScreen d = DeclarationsScreen();
+  // ProfileScreen p = ProfileScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +61,7 @@ class _FrameState extends State<Frame> with SingleTickerProviderStateMixin {
               TransactionsScreen(),
               ResultsScreen(),
               DeclarationsScreen(),
-              ProfileScreen(),
+              ProfileScreen()
             ],
             controller: pageController,
             onPageChanged: (pageIndex) => BlocProvider.of<TabBloc>(context)

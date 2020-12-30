@@ -10,7 +10,7 @@ class NavBar extends StatelessWidget {
   final double iconSize = 20.0;
   final GlobalKey bottomNavigationKey;
   final Color iconColor = Colors.white;
-  final Function(TabScreens) onTabSelected;
+  final Function(int) onTabSelected;
 
   NavBar(
       {Key key,
@@ -21,42 +21,52 @@ class NavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FFNavigationBar(
-      key: bottomNavigationKey,
-      theme: FFNavigationBarTheme(
-        barBackgroundColor: Theme.of(context).primaryColor,
-        selectedItemBorderColor: Colors.white,
-        selectedItemBackgroundColor: Colors.white,
-        selectedItemIconColor: Theme.of(context).primaryColor,
-        selectedItemLabelColor: Colors.white,
-        unselectedItemIconColor: Colors.white,
-        unselectedItemLabelColor: Colors.white,
-        unselectedItemTextStyle:
-            Theme.of(context).textTheme.subtitle2.copyWith(fontSize: 10.0),
-        barHeight: 80.0,
-        showSelectedItemShadow: false,
-        itemWidth: 60.0,
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.grey,
+            blurRadius: 10,
+          ),
+        ],
       ),
-      selectedIndex: TabScreens.values.indexOf(activeTab),
-      onSelectTab: (index) => onTabSelected(TabScreens.values[index]),
-      items: [
-        FFNavigationBarItem(
-          iconData: FontAwesomeIcons.arrowLeft,
-          label: "Transactions",
+      child: FFNavigationBar(
+        key: bottomNavigationKey,
+        theme: FFNavigationBarTheme(
+          barBackgroundColor: Theme.of(context).primaryColor,
+          selectedItemBorderColor: Colors.white,
+          selectedItemBackgroundColor: Colors.white,
+          selectedItemIconColor: Theme.of(context).primaryColor,
+          selectedItemLabelColor: Colors.white,
+          unselectedItemIconColor: Colors.white,
+          unselectedItemLabelColor: Colors.white,
+          unselectedItemTextStyle:
+              Theme.of(context).textTheme.subtitle2.copyWith(fontSize: 10.0),
+          barHeight: 80.0,
+          showSelectedItemShadow: false,
+          itemWidth: 60.0,
         ),
-        FFNavigationBarItem(
-          iconData: FontAwesomeIcons.chartLine,
-          label: "Resultats",
-        ),
-        FFNavigationBarItem(
-          iconData: FontAwesomeIcons.archive,
-          label: "Declarations",
-        ),
-        FFNavigationBarItem(
-          iconData: FontAwesomeIcons.user,
-          label: "Mon compte",
-        ),
-      ],
+        selectedIndex: TabScreens.values.indexOf(activeTab),
+        onSelectTab: (index) => onTabSelected(index),
+        items: [
+          FFNavigationBarItem(
+            iconData: FontAwesomeIcons.arrowLeft,
+            label: "Transactions",
+          ),
+          FFNavigationBarItem(
+            iconData: FontAwesomeIcons.chartLine,
+            label: "Resultats",
+          ),
+          FFNavigationBarItem(
+            iconData: FontAwesomeIcons.archive,
+            label: "Declarations",
+          ),
+          FFNavigationBarItem(
+            iconData: FontAwesomeIcons.user,
+            label: "Mon compte",
+          ),
+        ],
+      ),
     );
   }
 }
