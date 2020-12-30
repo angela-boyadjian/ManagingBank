@@ -34,7 +34,6 @@ class APIProvider extends AProvider {
         body: {'email': email, 'password': password, 'grant_type': 'password'});
 
     if (response.statusCode != 200) throw Exception();
-    print('LOGIN SUCCESS');
 
     Map<String, dynamic> jsonData = jsonDecode(response.body);
     _user.add(User(id: jsonData['access_token'], email: email));

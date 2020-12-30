@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:mimi/logic/cubit/cubit.dart';
 import 'package:mimi/ui/screens/login/widgets/reset_card.dart';
 
 class ResetScreen extends StatefulWidget {
@@ -68,7 +70,10 @@ class _ResetScreenState extends State<ResetScreen> {
                     flex: 3,
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 40.0),
-                      child: ResetCard(),
+                      child: BlocProvider(
+                        create: (context) => ResetPasswordCubit(),
+                        child: ResetCard(),
+                      ),
                     ),
                   ),
                 ],
