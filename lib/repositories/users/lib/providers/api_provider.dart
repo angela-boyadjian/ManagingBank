@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:convert';
 
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:http/http.dart' as http;
@@ -22,7 +22,7 @@ class APIProvider extends AProvider {
   @override
   Future<User> getUser(String id) async {
     Map<String, dynamic> decodedToken = JwtDecoder.decode(id);
-    print('TOKEN: ' + id);
+
     http.Response response = await http.get(
       "$_url/api/v1/users/${decodedToken['user']['uuid']}",
       headers: {
@@ -31,30 +31,13 @@ class APIProvider extends AProvider {
         'Authorization': 'Bearer $id',
       },
     );
-    print('CODE: ${response.statusCode}');
-    print('RESPONSE: ${response.body}');
-    http.Response r = await http.get(
-      "$_url/api/v1/organizations/${decodedToken['user']['uuid']}",
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $id',
-      },
-    );
-    print('CODE2: ${r.statusCode}');
-    print('RESPONSE2: ${r.body}');
-     http.Response r2 = await http.get(
-      "$_url/api/v1/vat_rates/?${decodedToken['user']['uuid']}",
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $id',
-      },
-    );
-    print('CODE2: ${r.statusCode}');
-    print('RESPONSE2: ${r.body}');
-    print(decodedToken);
-    print('USER ${decodedToken['user']['uuid']}');
+    if (response.statusCode != 200) throw Exception();
+
+    Map<String, dynamic> jsonData = jsonDecode(response.body);
+    var data = jsonData['data']['attributes'];
+
+    return User(decodedToken['user']['uuid'], data['firstname'],
+        data['lastname'], data['email'], null, null, null, null);
   }
 
   @override

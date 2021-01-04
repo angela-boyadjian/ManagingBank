@@ -51,6 +51,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   Stream<UserState> _mapGetToState(String id) async* {
     try {
       var userInDb = await _usersRepository.getUser(id);
+      print('FIRSTNAME: ' + userInDb.firstname);
       if (userInDb == null) {
         yield UserState.noUser();
       } else {
