@@ -1,16 +1,24 @@
 import 'dart:convert';
 
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:http/http.dart' as http;
-import 'package:users/models/organization.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:users/models/user.dart';
-import 'package:users/models/vat_exempt.dart';
+import 'package:users/models/exercise.dart';
 import 'package:users/models/vat_rates.dart';
+import 'package:users/models/vat_exempt.dart';
 import 'package:users/providers/provider.dart';
+import 'package:users/models/organization.dart';
 
 class APIProvider extends AProvider {
   final String _url = "https://api.mimi.neatops.tech";
+
+  APIProvider() {
+    _loadEnv();
+  }
+
+  void _loadEnv() async => await DotEnv().load('.env');
 
   @override
   Future<void> addUser(User user) {
@@ -25,7 +33,6 @@ class APIProvider extends AProvider {
   _getApiCall(String url, Map<String, String> header) async {
     http.Response response = await http.get(url, headers: header);
     if (response.statusCode != 200) throw Exception();
-
     return (response.body);
   }
 
@@ -38,12 +45,12 @@ class APIProvider extends AProvider {
       'Authorization': 'Bearer $id'
     };
 
-    //Get User
+    // Get User
     var userDecoded = jsonDecode(await _getApiCall(
-        "$_url/api/v1/users/${decodedToken['user']['uuid']}", header));
+        DotEnv().env['GET_USER_URL'] + decodedToken['user']['uuid'], header));
     var data = userDecoded['data']['attributes'];
 
-    //Get Org => Find a way to check if org is null
+    // Get Org => Find a way to check if org is null
     Organization userOrg = Organization(
         decodedToken['organizations'][0]['uuid'],
         decodedToken['organizations'][0]['name']);
@@ -57,7 +64,7 @@ class APIProvider extends AProvider {
       vatRatesListFinal.add(VatRates.fromJson(element['attributes']));
     });
 
-    //Get Exempt
+    // Get Exempt
     var vatExemptDecoded = jsonDecode(
         await _getApiCall("$_url/api/v1/vat_exempt_explanations", header));
     List<dynamic> vatExemptList = vatExemptDecoded['data'];
@@ -67,18 +74,26 @@ class APIProvider extends AProvider {
     });
 
     //Get exercises
+    var exercisesDecoded = jsonDecode(await _getApiCall(
+        "$_url/api/v1/exercises?organization_uuid=${userOrg.uuid}", header));
+    List<dynamic> exercisesList = exercisesDecoded['data'];
+    List<Exercise> exerciseListFinal = [];
+    exercisesList.forEach((element) {
+      exerciseListFinal.add(Exercise.fromJson(element['attributes']));
+    });
 
     //Get Categories
 
     return User(
-        decodedToken['user']['uuid'],
-        data['firstname'],
-        data['lastname'],
-        data['email'],
-        userOrg,
-        vatRatesListFinal,
-        vatExemptListFinal,
-        null);
+      decodedToken['user']['uuid'],
+      data['firstname'],
+      data['lastname'],
+      data['email'],
+      userOrg,
+      vatRatesListFinal,
+      vatExemptListFinal,
+      exerciseListFinal,
+    );
   }
 
   @override
