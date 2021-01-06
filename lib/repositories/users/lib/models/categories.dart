@@ -106,7 +106,8 @@ class Links {
   dynamic logoUrl;
 
   factory Links.fromJson(Map<String, dynamic> json) => Links(
-        logoUrl: json["logo_url"],
+        logoUrl:
+            json == null || json["logo_url"] == null ? null : json["logo_url"],
       );
 
   Map<String, dynamic> toJson() => {
