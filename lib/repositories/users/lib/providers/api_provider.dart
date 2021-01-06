@@ -7,6 +7,7 @@ import 'package:users/models/organization.dart';
 import 'package:users/models/user.dart';
 import 'package:users/models/vat_exempt.dart';
 import 'package:users/models/vat_rates.dart';
+import 'package:users/models/categories.dart';
 import 'package:users/providers/provider.dart';
 
 class APIProvider extends AProvider {
@@ -69,6 +70,10 @@ class APIProvider extends AProvider {
     //Get exercises
 
     //Get Categories
+    Categories categories = categoriesFromJson(
+        await _getApiCall("$_url/api/v1/categories", header));
+
+    print(categories.data.length);
 
     return User(
         decodedToken['user']['uuid'],
@@ -78,7 +83,8 @@ class APIProvider extends AProvider {
         userOrg,
         vatRatesListFinal,
         vatExemptListFinal,
-        null);
+        null,
+        categories);
   }
 
   @override
