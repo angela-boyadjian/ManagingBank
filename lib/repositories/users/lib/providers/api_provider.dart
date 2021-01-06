@@ -8,6 +8,7 @@ import 'package:users/models/user.dart';
 import 'package:users/models/exercise.dart';
 import 'package:users/models/vat_rates.dart';
 import 'package:users/models/vat_exempt.dart';
+import 'package:users/models/categories.dart';
 import 'package:users/providers/provider.dart';
 import 'package:users/models/organization.dart';
 
@@ -47,7 +48,7 @@ class APIProvider extends AProvider {
 
     // Get User
     var userDecoded = jsonDecode(await _getApiCall(
-        DotEnv().env['GET_USER_URL'] + decodedToken['user']['uuid'], header));
+        "$_url/api/v1/users/" + decodedToken['user']['uuid'], header));
     var data = userDecoded['data']['attributes'];
 
     // Get Org => Find a way to check if org is null
@@ -83,6 +84,8 @@ class APIProvider extends AProvider {
     });
 
     //Get Categories
+    Categories categories = categoriesFromJson(
+        await _getApiCall("$_url/api/v1/categories", header));
 
     return User(
       decodedToken['user']['uuid'],
@@ -93,6 +96,7 @@ class APIProvider extends AProvider {
       vatRatesListFinal,
       vatExemptListFinal,
       exerciseListFinal,
+      categories,
     );
   }
 

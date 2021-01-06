@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:users/models/exercise.dart';
 import 'package:users/models/vat_exempt.dart';
-
 import 'package:users/models/vat_rates.dart';
+import 'package:users/models/categories.dart';
 import 'package:users/models/organization.dart';
 
 class User extends Equatable {
@@ -16,9 +16,18 @@ class User extends Equatable {
   final List<VatRates> vatRates;
   final List<VatExempt> vatExempt;
   final List<Exercise> exercises;
+  final Categories categories;
 
-  const User(this.uuid, this.firstname, this.lastname, this.email,
-      this.organization, this.vatRates, this.vatExempt, this.exercises);
+  const User(
+      this.uuid,
+      this.firstname,
+      this.lastname,
+      this.email,
+      this.organization,
+      this.vatRates,
+      this.vatExempt,
+      this.exercises,
+      this.categories);
 
   Map<String, Object> toJson() {
     return {
@@ -30,6 +39,7 @@ class User extends Equatable {
       'vat_rates': jsonEncode(vatRates),
       'vat_exempt': jsonEncode(vatExempt),
       'exercises': jsonEncode(exercises),
+      'categories': categoriesToJson(categories),
     };
   }
 
@@ -40,7 +50,7 @@ class User extends Equatable {
     var vatExemptList = json['vat_exempt'] as List;
     List<VatExempt> vatExemptFinalList =
         vatExemptList.map((i) => VatExempt.fromJson(i)).toList();
-    var exerciseList = json['vat_exempt'] as List;
+    var exerciseList = json['exercises'] as List;
     List<Exercise> exerciseFinalList =
         exerciseList.map((i) => Exercise.fromJson(i)).toList();
 
@@ -53,6 +63,7 @@ class User extends Equatable {
       vatFinalList,
       vatExemptFinalList,
       exerciseFinalList,
+      categoriesFromJson(json['categories']),
     );
   }
 
@@ -65,5 +76,6 @@ class User extends Equatable {
         this.vatRates,
         this.vatExempt,
         this.exercises,
+        this.categories,
       ];
 }
