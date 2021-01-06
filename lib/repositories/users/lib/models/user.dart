@@ -1,62 +1,81 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:users/models/exercise.dart';
+import 'package:users/models/vat_exempt.dart';
+import 'package:users/models/vat_rates.dart';
+import 'package:users/models/categories.dart';
+import 'package:users/models/organization.dart';
 
 class User extends Equatable {
-  final String id;
-  final String name;
+  final String uuid;
+  final String firstname;
+  final String lastname;
   final String email;
-  final String photo;
-  final String bio;
+  final Organization organization;
+  final List<VatRates> vatRates;
+  final List<VatExempt> vatExempt;
+  final List<Exercise> exercises;
+  final Categories categories;
 
-  const User(this.id, this.email, this.name, this.photo, this.bio);
-
-  User.fromData(Map<String, dynamic> data)
-      : id = data['id'],
-        name = data['name'],
-        email = data['email'],
-        photo = data['photo'],
-        bio = data['bio'];
+  const User(
+      this.uuid,
+      this.firstname,
+      this.lastname,
+      this.email,
+      this.organization,
+      this.vatRates,
+      this.vatExempt,
+      this.exercises,
+      this.categories);
 
   Map<String, Object> toJson() {
     return {
-      'id': id,
-      'name': name,
+      'uuid': uuid,
+      'firstname': firstname,
+      'lastname': lastname,
       'email': email,
-      'photo': photo,
-      'bio': bio,
+      'organization': organization.toJson(),
+      'vat_rates': jsonEncode(vatRates),
+      'vat_exempt': jsonEncode(vatExempt),
+      'exercises': jsonEncode(exercises),
+      'categories': categoriesToJson(categories),
     };
   }
 
   static User fromJson(Map<String, Object> json) {
+    var vatList = json['vat_rates'] as List;
+    List<VatRates> vatFinalList =
+        vatList.map((i) => VatRates.fromJson(i)).toList();
+    var vatExemptList = json['vat_exempt'] as List;
+    List<VatExempt> vatExemptFinalList =
+        vatExemptList.map((i) => VatExempt.fromJson(i)).toList();
+    var exerciseList = json['exercises'] as List;
+    List<Exercise> exerciseFinalList =
+        exerciseList.map((i) => Exercise.fromJson(i)).toList();
+
     return User(
-      json['id'] as String,
-      json['name'] as String,
+      json['uuid'] as String,
+      json['firstname'] as String,
+      json['lastname'] as String,
       json['email'] as String,
-      json['photo'] as String,
-      json['bio'] as String,
+      json['organization'] as Organization,
+      vatFinalList,
+      vatExemptFinalList,
+      exerciseFinalList,
+      categoriesFromJson(json['categories']),
     );
   }
 
-  static User fromSnapshot(DocumentSnapshot snap) {
-    return User(
-      snap.id,
-      snap.data()['name'],
-      snap.data()['email'],
-      snap.data()['photo'],
-      snap.data()['bio'],
-    );
-  }
-
-  Map<String, Object> toDocument() {
-    return {
-      'id': id,
-      'name': name,
-      'email': email,
-      'photo': photo,
-      'bio': bio,
-    };
-  }
-
-  List<Object> get props =>
-      [this.id, this.email, this.name, this.photo, this.bio];
+  List<Object> get props => [
+        this.uuid,
+        this.firstname,
+        this.lastname,
+        this.email,
+        this.organization,
+        this.vatRates,
+        this.vatExempt,
+        this.exercises,
+        this.categories,
+      ];
 }

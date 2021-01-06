@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mimi/logic/bloc/bloc.dart';
+import 'package:users/users_repository.dart';
 
 class UserCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final User user = context.select((UserBloc bloc) => bloc.state.user);
+
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
@@ -34,7 +39,7 @@ class UserCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 5.0),
                       child: Text(
-                        "Thomas Andrieux",
+                        '${user.firstname} ${user.lastname}',
                         style: Theme.of(context).textTheme.headline6.copyWith(
                             color: Colors.white,
                             fontSize: 16.0,
@@ -42,7 +47,7 @@ class UserCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "thomas@neotops.com",
+                      '${user.email}',
                       style: Theme.of(context).textTheme.subtitle1.copyWith(
                           color: Colors.white,
                           fontSize: 14.0,

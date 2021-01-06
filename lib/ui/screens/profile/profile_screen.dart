@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:mimi/logic/bloc/bloc.dart';
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
 
 import 'widgets/user_card.dart';
@@ -46,7 +44,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.select((UserBloc bloc) => bloc.state.user);
     return Scaffold(
       backgroundColor: Color(0xFFFCFCFC),
       appBar: CustomAppBar("Mon compte"),

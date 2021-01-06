@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:users/users_repository.dart';
@@ -44,8 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
             case UserStatus.NoUser:
               final user =
                   BlocProvider.of<AuthenticationBloc>(context).state.user;
-              BlocProvider.of<UserBloc>(context).add(AddUser(User(
-                  user.id, user.email, user.name, user.photo, 'new user')));
+              // BlocProvider.of<UserBloc>(context).add(AddUser(User(
+              //     user.id, user.email, user.name, user.photo, 'new user')));
               break;
             case UserStatus.Error:
               Scaffold.of(context)

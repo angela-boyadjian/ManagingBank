@@ -11,7 +11,7 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this._authenticationRepository)
       : assert(_authenticationRepository != null),
         super(LoginInitial());
-  
+
   Future<void> logInWithCredentials(String email, String password) async {
     emit(LoginInProgress());
     try {

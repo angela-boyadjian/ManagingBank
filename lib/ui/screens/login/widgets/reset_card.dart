@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mimi/logic/cubit/cubit.dart';
 import 'package:mimi/ui/widgets/custom_button.dart';
 
 class ResetCard extends StatefulWidget {
@@ -46,55 +48,79 @@ class _ResetCardState extends State<ResetCard> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-
-    return Container(
-      width: MediaQuery.of(context).size.width - 50,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        children: [
-          Flexible(
-              flex: 1,
+    return BlocListener<ResetPasswordCubit, ResetPasswordState>(
+      listener: (resetContext, state) {
+        if (state is ResetPasswordSuccess) {
+          print('Email sent');
+        }
+        if (state is ResetPasswordError) {
+          Scaffold.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.black38,
+                content: Text('Reset password failed',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6
+                        .copyWith(color: Colors.red)),
+              ),
+            );
+        }
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width - 50,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          children: [
+            Flexible(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 15.0),
+                  child: Text(
+                    "Mot de passe oublié ?",
+                    style: theme.textTheme.headline6.copyWith(
+                        color: theme.primaryColor, fontWeight: FontWeight.bold),
+                  ),
+                )),
+            Flexible(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Merci d'inscrire votre adresse email et de suivre les intructions.",
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.subtitle2
+                        .copyWith(color: theme.primaryColor),
+                  ),
+                )),
+            Flexible(
+              flex: 2,
               child: Padding(
-                padding: const EdgeInsets.only(top: 15.0),
-                child: Text(
-                  "Mot de passe oublié ?",
-                  style: theme.textTheme.headline6.copyWith(
-                      color: theme.primaryColor, fontWeight: FontWeight.bold),
+                padding: const EdgeInsets.all(10.0),
+                child: TextField(
+                  controller: emailController,
+                  decoration: _textFieldDecoration("Email"),
                 ),
-              )),
-          Flexible(
-              flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Merci d'inscrire votre adresse email et de suivre les intructions.",
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.subtitle2
-                      .copyWith(color: theme.primaryColor),
-                ),
-              )),
-          Flexible(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextField(
-                controller: emailController,
-                decoration: _textFieldDecoration("Email"),
               ),
             ),
-          ),
-          Spacer(flex: 6),
-          Flexible(
-            flex: 0,
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: CustomButton(onPressed: () => {}, text: "Continuer"),
+            Spacer(flex: 6),
+            Flexible(
+              flex: 0,
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: CustomButton(
+                    onPressed: () =>
+                        BlocProvider.of<ResetPasswordCubit>(context)
+                            .resetPassword(emailController.text),
+                    text: "Continuer"),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
