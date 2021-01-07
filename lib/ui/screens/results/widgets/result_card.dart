@@ -5,14 +5,12 @@ import 'package:mimi/logic/cubit/cubit.dart';
 
 class ResultCard extends StatefulWidget {
   final String title;
-  final String amount;
   final Color color;
   final String route;
 
   ResultCard({
     Key key,
     @required this.title,
-    @required this.amount,
     @required this.color,
     @required this.route,
   }) : super(key: key);
@@ -69,11 +67,16 @@ class _ResultCardState extends State<ResultCard> {
                       padding: EdgeInsets.only(left: 12.0),
                       child: BlocBuilder<BankAccountCubit, BankAccountState>(
                         builder: (context, state) {
+                          String amount = "";
+                          if (state is BankAccountInitial ||
+                              state is BankAccountInProgress) {
+                            amount = "Loading...";
+                          }
                           if (state is BankAccountSuccess) {
-                            print("AMOUNT: " + state.amount);
+                            amount = state.amount;
                           }
                           return Text(
-                            widget.amount,
+                            amount,
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle1

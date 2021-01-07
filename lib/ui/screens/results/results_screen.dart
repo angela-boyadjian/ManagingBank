@@ -58,33 +58,32 @@ class _ResultsScreenState extends State<ResultsScreen> {
                 ],
               ),
               SizedBox(height: 30.0),
-              Flexible(
-                flex: 1,
-                child: ResultCard(
-                  title: "Dépenses",
-                  amount: "2 567,92 €",
-                  color: Theme.of(context).accentColor,
-                  route: spendingsRoute,
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: ResultCard(
-                  title: "Recettes",
-                  amount: "10 546,12 €",
-                  color: Color(0xFF48D73C),
-                  route: revenuesRoute,
-                ),
-              ),
+              // Flexible(
+              //   flex: 1,
+              //   child: ResultCard(
+              //     title: "Dépenses",
+              //     amount: "2 567,92 €",
+              //     color: Theme.of(context).accentColor,
+              //     route: spendingsRoute,
+              //   ),
+              // ),
+              // Flexible(
+              //   flex: 1,
+              //   child: ResultCard(
+              //     title: "Recettes",
+              //     amount: "10 546,12 €",
+              //     color: Color(0xFF48D73C),
+              //     route: revenuesRoute,
+              //   ),
+              // ),
               Flexible(
                 flex: 1,
                 child: BlocProvider(
                   lazy: false,
                   create: (context) => BankAccountCubit(
-                      context.read<DataRepository>(), user.uuid, user.header),
+                      context.read<DataRepository>(), user?.uuid, user?.header),
                   child: ResultCard(
                     title: "Trésorerie",
-                    amount: "12 546,26 €",
                     color: Color(0xFF5353E0),
                     route: treasuryRoute,
                   ),

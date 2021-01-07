@@ -16,11 +16,14 @@ class BankAccountCubit extends Cubit<BankAccountState> {
     _getBankAccounts();
   }
 
+  String _getTotal() {
+    return "123";
+  }
+
   Future<void> _getBankAccounts() async {
     emit(BankAccountInProgress());
     _bankAccounts =
         await _dataRepository.getBankAccountByUser(this._uuid, this._header);
-    print('BANK ACCOUNT: ' + _bankAccounts.data.length.toString());
-    emit(BankAccountSuccess(amount: "123"));
+    emit(BankAccountSuccess(amount: _getTotal()));
   }
 }
