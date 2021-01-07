@@ -30,8 +30,6 @@ class AuthenticationBloc
     AuthenticationEvent event,
   ) async* {
     if (event is AuthenticationUserChanged) {
-      print('AUTH CHANGE');
-
       yield event.user != User.empty
           ? AuthenticationState.authenticated(event.user)
           : const AuthenticationState.unauthenticated();

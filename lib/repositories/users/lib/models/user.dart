@@ -17,6 +17,7 @@ class User extends Equatable {
   final List<VatExempt> vatExempt;
   final List<Exercise> exercises;
   final Categories categories;
+  final Map<String, String> header;
 
   const User(
       this.uuid,
@@ -27,7 +28,8 @@ class User extends Equatable {
       this.vatRates,
       this.vatExempt,
       this.exercises,
-      this.categories);
+      this.categories,
+      {this.header});
 
   Map<String, Object> toJson() {
     return {
@@ -77,5 +79,6 @@ class User extends Equatable {
         this.vatExempt,
         this.exercises,
         this.categories,
+        this.header,
       ];
 }

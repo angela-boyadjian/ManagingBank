@@ -3,4 +3,5 @@ export 'image/image_cubit.dart';
 export 'register/register_cubit.dart';
 export 'drop_down/drop_down_cubit.dart';
 export 'preferences/preferences_cubit.dart';
+export 'bank_account/bank_account_cubit.dart';
 export 'reset_password/reset_password_cubit.dart';

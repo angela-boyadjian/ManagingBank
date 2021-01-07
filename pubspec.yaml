@@ -34,6 +34,8 @@ dependencies:
     path: lib/repositories/users
   storage:
     path: lib/repositories/storage
+  data:
+    path: lib/repositories/data
 
   flutter:
     sdk: flutter

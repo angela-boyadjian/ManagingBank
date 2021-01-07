@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mimi/logic/cubit/cubit.dart';
 
 class ResultCard extends StatefulWidget {
   final String title;
@@ -65,12 +67,22 @@ class _ResultCardState extends State<ResultCard> {
                     SizedBox(height: 5.0),
                     Padding(
                       padding: EdgeInsets.only(left: 12.0),
-                      child: Text(
-                        widget.amount,
-                        style: Theme.of(context).textTheme.subtitle1.copyWith(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.w700,
-                            color: color),
+                      child: BlocBuilder<BankAccountCubit, BankAccountState>(
+                        builder: (context, state) {
+                          if (state is BankAccountSuccess) {
+                            print("AMOUNT: " + state.amount);
+                          }
+                          return Text(
+                            widget.amount,
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1
+                                .copyWith(
+                                    fontSize: 24.0,
+                                    fontWeight: FontWeight.w700,
+                                    color: color),
+                          );
+                        },
                       ),
                     ),
                   ],

@@ -183,6 +183,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.10"
+  data:
+    dependency: "direct main"
+    description:
+      path: "lib/repositories/data"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   equatable:
     dependency: "direct main"
     description:

@@ -31,7 +31,6 @@ class APIProvider extends AProvider {
 
   @override
   Future<User> getUser(String id) async {
-    print('ID: ' + id);
     Map<String, dynamic> decodedToken = JwtDecoder.decode(id);
     String uuid = decodedToken['user']['uuid'];
     Map<String, String> header = {
@@ -91,6 +90,7 @@ class APIProvider extends AProvider {
       vatExemptListFinal,
       exerciseListFinal,
       categories,
+      header: header,
     );
   }
 

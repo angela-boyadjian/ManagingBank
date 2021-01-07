@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:data/data_repository.dart';
 import 'package:users/users_repository.dart';
 import 'package:storage/storage_repository.dart';
 import 'package:authentication/authentication_repository.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       AuthenticationRepository();
   final UsersRepository usersRepository = UsersRepository();
   final StorageRepository storageRepository = StorageRepository();
+  final DataRepository dataRepository = DataRepository();
 
   ThemeData getTheme(BuildContext context, PreferencesState state) {
     if (state is PreferencesLoaded) {
@@ -49,7 +51,10 @@ class MyApp extends StatelessWidget {
         ),
         RepositoryProvider.value(
           value: storageRepository,
-        )
+        ),
+        RepositoryProvider.value(
+          value: dataRepository,
+        ),
       ],
       child: MultiBlocProvider(
         providers: [

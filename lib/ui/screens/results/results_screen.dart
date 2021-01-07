@@ -1,13 +1,16 @@
+import 'package:data/data_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mimi/constants/constants.dart';
+import 'package:mimi/logic/bloc/bloc.dart';
 
+import 'package:mimi/logic/cubit/cubit.dart';
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
 import 'package:mimi/ui/widgets/drop_down/drop_down_model.dart';
 import 'package:mimi/ui/widgets/drop_down/custom_drop_down.dart';
-import 'package:mimi/logic/cubit/drop_down/drop_down_cubit.dart';
 import 'package:mimi/ui/screens/results/widgets/result_card.dart';
 import 'package:mimi/ui/screens/results/widgets/prevision_card.dart';
+import 'package:users/users_repository.dart';
 
 class ResultsScreen extends StatefulWidget {
   ResultsScreen({Key key}) : super(key: key);
@@ -30,6 +33,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final User user = context.select((UserBloc bloc) => bloc.state.user);
+
     return Scaffold(
       appBar: CustomAppBar("Résultats"),
       body: Stack(
@@ -73,11 +78,16 @@ class _ResultsScreenState extends State<ResultsScreen> {
               ),
               Flexible(
                 flex: 1,
-                child: ResultCard(
-                  title: "Trésorerie",
-                  amount: "12 546,26 €",
-                  color: Color(0xFF5353E0),
-                  route: treasuryRoute,
+                child: BlocProvider(
+                  lazy: false,
+                  create: (context) => BankAccountCubit(
+                      context.read<DataRepository>(), user.uuid, user.header),
+                  child: ResultCard(
+                    title: "Trésorerie",
+                    amount: "12 546,26 €",
+                    color: Color(0xFF5353E0),
+                    route: treasuryRoute,
+                  ),
                 ),
               ),
               Spacer(flex: 1),
