@@ -20,7 +20,6 @@ enum StorageStatus { Initial, Loading, UploadSuccess, DownloadSuccess, Error }
 
 // Routes
 const String splashRoute = '/';
-const String homeRoute = '/home';
 const String loginRoute = '/login';
 const String resetRoute = '/reset';
 const String searchRoute = '/search';

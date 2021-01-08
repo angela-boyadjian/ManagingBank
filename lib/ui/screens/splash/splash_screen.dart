@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:authentication/authentication_repository.dart';
+import 'package:users/users_repository.dart' as UserRep;
 
 import 'package:mimi/logic/bloc/bloc.dart';
 import 'package:mimi/ui/widgets/frame.dart';
@@ -26,9 +27,19 @@ class SplashScreen extends StatelessWidget {
         builder: (context, state) {
       switch (state.status) {
         case AuthenticationStatus.Authenticated:
-          return BlocProvider(
-            create: (context) => TabBloc(),
-            child: Frame(),
+          final UserRep.User user =
+              context.select((UserBloc bloc) => bloc.state.user);
+          if (user != null) {
+            return BlocProvider(
+              create: (context) => TabBloc(),
+              child: Frame(),
+            );
+          }
+          return Column(
+            children: [
+              _buildLogo(),
+              CustomProgressIndicator(),
+            ],
           );
         case AuthenticationStatus.Unauthenticated:
           return BlocProvider(

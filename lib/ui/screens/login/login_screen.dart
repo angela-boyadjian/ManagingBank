@@ -38,14 +38,6 @@ class _LoginScreenState extends State<LoginScreen> {
       listeners: [
         BlocListener<UserBloc, UserState>(listener: (userContext, state) {
           switch (state.status) {
-            case UserStatus.Success:
-              return Navigator.of(context).pushNamed(homeRoute);
-            case UserStatus.NoUser:
-              final user =
-                  BlocProvider.of<AuthenticationBloc>(context).state.user;
-              // BlocProvider.of<UserBloc>(context).add(AddUser(User(
-              //     user.id, user.email, user.name, user.photo, 'new user')));
-              break;
             case UserStatus.Error:
               Scaffold.of(context)
                 ..hideCurrentSnackBar()
