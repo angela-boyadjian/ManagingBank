@@ -7,11 +7,7 @@ import 'package:data/constants/constants.dart' as constants;
 class APIProvider extends AProvider {
   _getApiCall(String url, Map<String, String> header) async {
     http.Response response = await http.get(url, headers: header);
-    if (response.statusCode != 200) {
-      print("CODE: ${response.statusCode}");
-      print("BODY: ${response.body}");
-      throw Exception();
-    }
+    if (response.statusCode != 200) throw Exception();
     return (response.body);
   }
 
@@ -19,6 +15,6 @@ class APIProvider extends AProvider {
   Future<BankAccount> getBankAccountByUser(
       String uuid, Map<String, String> header) async {
     return bankAccountFromJson(
-        await _getApiCall(constants.bankAccountByUserUrl, header));
+        await _getApiCall("${constants.bankAccountByUserUrl}$uuid", header));
   }
 }

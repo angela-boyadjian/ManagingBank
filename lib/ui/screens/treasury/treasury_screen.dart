@@ -24,6 +24,9 @@ class _TreasuryScreenState extends State<TreasuryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final BankAccountState bankAccounts =
+        context.select((BankAccountCubit bloc) => bloc.state);
+
     return Scaffold(
       appBar: CustomAppBar("Trésorerie", previous: true),
       body: Stack(
@@ -35,7 +38,7 @@ class _TreasuryScreenState extends State<TreasuryScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    "12 546,26 €",
+                    bankAccounts.amount,
                     style: Theme.of(context).textTheme.headline1.copyWith(
                           fontWeight: FontWeight.w700,
                           color: Color(0xFF5353E0),
@@ -47,23 +50,17 @@ class _TreasuryScreenState extends State<TreasuryScreen> {
                 ],
               ),
               SizedBox(height: 30.0),
-              Flexible(
-                flex: 1,
-                child: BanksCard("Revolut Business", "5 306,12 €", 0.4),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.65,
+                child: ListView.builder(
+                    itemCount: bankAccounts.banks.length,
+                    itemBuilder: (BuildContext ctxt, int index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                        child: BanksCard(bankAccounts.banks[index], 0.4),
+                      );
+                    }),
               ),
-              Flexible(
-                flex: 1,
-                child: BanksCard("Crédit Agricole", "3 100,10 €", 0.3),
-              ),
-              Flexible(
-                flex: 1,
-                child: BanksCard("Quonto", "2 510,04 €", 0.2),
-              ),
-              Flexible(
-                flex: 1,
-                child: BanksCard("Amercian Express", "1 130,00 €", 0.1),
-              ),
-              Spacer(flex: 1),
             ],
           ),
           Positioned(

@@ -1,7 +1,10 @@
 part of 'bank_account_cubit.dart';
 
 abstract class BankAccountState extends Equatable {
-  const BankAccountState();
+  final String amount;
+  final List<DatumAttributes> banks;
+
+  const BankAccountState({this.banks, this.amount});
 
   @override
   List<Object> get props => [];
@@ -13,8 +16,9 @@ class BankAccountInProgress extends BankAccountState {}
 
 class BankAccountSuccess extends BankAccountState {
   final String amount;
+  final List<DatumAttributes> banks;
 
-  const BankAccountSuccess({this.amount});
+  const BankAccountSuccess({this.banks, this.amount});
   @override
   List<Object> get props => [];
 }

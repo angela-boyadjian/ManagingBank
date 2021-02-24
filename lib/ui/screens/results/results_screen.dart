@@ -1,16 +1,17 @@
-import 'package:data/data_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mimi/constants/constants.dart';
-import 'package:mimi/logic/bloc/bloc.dart';
 
+import 'package:data/data_repository.dart';
+import 'package:users/users_repository.dart';
+
+import 'package:mimi/logic/bloc/bloc.dart';
 import 'package:mimi/logic/cubit/cubit.dart';
+import 'package:mimi/constants/constants.dart';
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
 import 'package:mimi/ui/widgets/drop_down/drop_down_model.dart';
 import 'package:mimi/ui/widgets/drop_down/custom_drop_down.dart';
 import 'package:mimi/ui/screens/results/widgets/result_card.dart';
 import 'package:mimi/ui/screens/results/widgets/prevision_card.dart';
-import 'package:users/users_repository.dart';
 
 class ResultsScreen extends StatefulWidget {
   ResultsScreen({Key key}) : super(key: key);

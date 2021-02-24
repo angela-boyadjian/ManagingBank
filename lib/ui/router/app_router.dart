@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mimi/logic/cubit/cubit.dart';
 import 'package:mimi/ui/screens/categories/categories_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -58,8 +59,14 @@ class AppRouter {
           duration: Duration(milliseconds: 400),
         );
       case treasuryRoute:
+        BankAccountCubit bankAccountCubit =
+            settings.arguments as BankAccountCubit;
+
         return PageTransition(
-          child: TreasuryScreen(),
+          child: BlocProvider.value(
+            value: bankAccountCubit,
+            child: TreasuryScreen(),
+          ),
           type: PageTransitionType.rightToLeftWithFade,
           duration: Duration(milliseconds: 400),
         );

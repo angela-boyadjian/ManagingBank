@@ -173,7 +173,7 @@ class DataAttributes {
 
   int id;
   String uuid;
-  Name name;
+  String name;
   CountryCode countryCode;
   double balance;
   double cashFlow;
@@ -183,7 +183,7 @@ class DataAttributes {
   factory DataAttributes.fromJson(Map<String, dynamic> json) => DataAttributes(
         id: json["id"],
         uuid: json["uuid"],
-        name: nameValues.map[json["name"]],
+        name: json["name"],
         countryCode: countryCodeValues.map[json["country_code"]],
         balance: json["balance"].toDouble(),
         cashFlow: json["cash_flow"].toDouble(),

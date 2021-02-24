@@ -27,6 +27,7 @@ dependencies:
   flutter_date_pickers: ^0.1.8
   getwidget: ^1.2.4
   http: ^0.12.2
+  intl: ^0.16.1
 
   authentication:
     path: lib/repositories/authentication

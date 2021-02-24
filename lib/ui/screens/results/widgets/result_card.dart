@@ -39,7 +39,8 @@ class _ResultCardState extends State<ResultCard> {
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: InkWell(
-        onTap: () => Navigator.of(context).pushNamed(widget.route),
+        onTap: () => Navigator.of(context).pushNamed(widget.route,
+            arguments: context.read<BankAccountCubit>()),
         child: Container(
           width: MediaQuery.of(context).size.width - 30.0,
           decoration: BoxDecoration(
