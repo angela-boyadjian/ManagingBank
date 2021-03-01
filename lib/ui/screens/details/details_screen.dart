@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:mimi/ui/models/drop_downs.dart';
+import 'package:data/data_repository.dart';
+import 'package:mimi/ui/utils/date_converter.dart';
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
+import 'package:mimi/ui/widgets/date/date_card.dart';
 import 'package:mimi/ui/widgets/disabled_button.dart';
 
 import 'widgets/category_card.dart';
@@ -10,7 +12,7 @@ import 'widgets/detail_section.dart';
 import 'widgets/add_category_card.dart';
 
 class DetailsScreen extends StatefulWidget {
-  final TransactionModel transaction;
+  final TransactionAttributes transaction;
 
   DetailsScreen({Key key, this.transaction}) : super(key: key);
 
@@ -20,6 +22,7 @@ class DetailsScreen extends StatefulWidget {
 
 class _DetailsScreenState extends State<DetailsScreen> {
   TextEditingController _noteController = TextEditingController();
+  final DateConverter dateConverter = DateConverter();
 
   @override
   void initState() {
@@ -55,51 +58,28 @@ class _DetailsScreenState extends State<DetailsScreen> {
     );
   }
 
-  Widget _buildDate() {
-    return Container(
-      height: 55.0,
-      width: 55.0,
-      child: Card(
-        elevation: 4.0,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, left: 2.0),
-              child: Text(widget.transaction.day,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1
-                      .copyWith(fontWeight: FontWeight.bold)),
-            ),
-            Text(widget.transaction.month,
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle2
-                    .copyWith(fontSize: 10.0)),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _getTitle() {
     return Row(
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 10.0),
-          child: _buildDate(),
+          child: DateCard(
+              date: dateConverter.convertDate(widget.transaction.date)),
         ),
         SizedBox(width: 10),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                widget.transaction.name,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6
-                    .copyWith(fontWeight: FontWeight.bold, fontSize: 20.0),
+              FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Text(
+                  widget.transaction.description,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .copyWith(fontWeight: FontWeight.bold, fontSize: 20.0),
+                ),
               ),
               SizedBox(height: 5),
               Row(
@@ -168,9 +148,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
             SizedBox(height: 20.0),
             _getTitle(),
             SizedBox(height: 20.0),
-            CategoryCard(widget.transaction.category),
+            CategoryCard("Sans catégorie"),
             SizedBox(height: 20.0),
-            DetailSection(widget.transaction.tva, widget.transaction.amount),
+            DetailSection("10", widget.transaction.amount),
             SizedBox(height: 20.0),
             Padding(
               padding: const EdgeInsets.only(right: 20.0),

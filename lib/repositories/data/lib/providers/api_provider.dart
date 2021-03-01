@@ -8,8 +8,6 @@ import 'package:data/constants/constants.dart' as constants;
 class APIProvider extends AProvider {
   _getApiCall(String url, Map<String, String> header) async {
     http.Response response = await http.get(url, headers: header);
-    print('STATUS CODE: ${response.statusCode}');
-    print('STATUS BODY: ${response.body}');
     if (response.statusCode != 200) throw Exception();
     return (response.body);
   }

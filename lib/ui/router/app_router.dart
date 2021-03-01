@@ -1,3 +1,4 @@
+import 'package:data/data_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mimi/logic/cubit/cubit.dart';
@@ -77,7 +78,8 @@ class AppRouter {
           duration: Duration(milliseconds: 400),
         );
       case detailsRoute:
-        TransactionModel transaction = settings.arguments as TransactionModel;
+        TransactionAttributes transaction =
+            settings.arguments as TransactionAttributes;
         return PageTransition(
           child: DetailsScreen(transaction: transaction),
           type: PageTransitionType.fade,

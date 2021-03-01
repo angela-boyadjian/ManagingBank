@@ -48,29 +48,6 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
           Flexible(
             flex: 1,
             child: Center(
-              child: BlocBuilder<TransactionsCubit, TransactionsState>(
-                  builder: (context, state) {
-                String name = "";
-                if (state is TransactionsInitial ||
-                    state is TransactionsInProgress) {
-                  name = 'Loading...';
-                }
-                if (state is TransactionsSuccess) {
-                  name = state.transactions[0].attributes.description;
-                }
-                return Text(
-                  name,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1
-                      .copyWith(fontSize: 24.0, fontWeight: FontWeight.w700),
-                );
-              }),
-            ),
-          ),
-          Flexible(
-            flex: 1,
-            child: Center(
               child: PendingCard(isTransaction: true),
             ),
           ),
@@ -91,18 +68,29 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
             flex: 4,
             child: Container(
               color: Colors.white,
-              child: ListView.separated(
-                scrollDirection: Axis.vertical,
-                itemCount: _transactions.length,
-                itemBuilder: (context, index) {
-                  return TransactionCard(_transactions[index]);
-                },
-                separatorBuilder: (context, index) {
-                  return Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 0.88,
-                    color: Color(0xFFEEEEFC),
-                  );
+              child: BlocBuilder<TransactionsCubit, TransactionsState>(
+                builder: (context, state) {
+                  if (state is TransactionsInitial ||
+                      state is TransactionsInProgress) {
+                    return (Text('Loading...'));
+                  }
+                  if (state is TransactionsSuccess) {
+                    return ListView.separated(
+                      scrollDirection: Axis.vertical,
+                      itemCount: state.transactions.length,
+                      itemBuilder: (context, index) {
+                        return TransactionCard(_transactions[index],
+                            state.transactions[index].attributes);
+                      },
+                      separatorBuilder: (context, index) {
+                        return Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 0.88,
+                            color: Color(0xFFEEEEFC));
+                      },
+                    );
+                  }
+                  return Container();
                 },
               ),
             ),

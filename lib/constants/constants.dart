@@ -38,3 +38,19 @@ const String themePref = 'theme';
 // Numbers
 const double min = 0;
 const double max = 5000;
+
+// Maps
+const Map months = {
+  "01": "JAN",
+  "02": "FEV",
+  "03": "MAR",
+  "04": "AVR",
+  "05": "MAI",
+  "06": "JUI",
+  "07": "JUL",
+  "08": "AOÛ",
+  "09": "SEP",
+  "10": "OCT",
+  "11": "NOV",
+  "12": "DEC",
+};

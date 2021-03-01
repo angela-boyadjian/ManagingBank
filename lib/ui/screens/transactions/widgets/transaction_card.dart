@@ -1,40 +1,28 @@
 import 'package:flutter/material.dart';
 
+import 'package:data/data_repository.dart';
 import 'package:mimi/constants/constants.dart';
 import 'package:mimi/ui/models/drop_downs.dart';
+import 'package:mimi/ui/utils/date_converter.dart';
+import 'package:mimi/ui/widgets/date/date_card.dart';
 
 import 'status_card.dart';
 
 class TransactionCard extends StatelessWidget {
   final TransactionModel _transaction;
+  final TransactionAttributes _transactionAttributes;
+  final DateConverter dateConverter = DateConverter();
 
-  TransactionCard(this._transaction);
+  TransactionCard(this._transaction, this._transactionAttributes);
 
-  Widget _buildDate(context) {
-    return Container(
-      height: 55.0,
-      width: 55.0,
-      child: Card(
-        elevation: 2.0,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, left: 2.0),
-              child: Text(_transaction.day,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1
-                      .copyWith(fontWeight: FontWeight.bold)),
-            ),
-            Text(_transaction.month,
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle2
-                    .copyWith(fontSize: 10.0)),
-          ],
-        ),
-      ),
-    );
+  String getCategory() {
+    String category = "Sans catégorie";
+    _transactionAttributes.transactionCategories.data.forEach((element) {
+      if (element.attributes.kind != null) {
+        category = element.attributes.kind;
+      }
+    });
+    return category;
   }
 
   Widget _buildSubtitle(context) {
@@ -43,7 +31,7 @@ class TransactionCard extends StatelessWidget {
         Align(
           alignment: Alignment.topLeft,
           child: Text(
-            _transaction.category,
+            getCategory(),
             style: Theme.of(context).textTheme.subtitle1.copyWith(
                 fontSize: 10.0,
                 fontWeight: FontWeight.w300,
@@ -54,7 +42,7 @@ class TransactionCard extends StatelessWidget {
         Row(
           children: [
             Text(
-              _transaction.amount + ' ',
+              _transactionAttributes.amount + ' ',
               style: Theme.of(context)
                   .textTheme
                   .subtitle1
@@ -64,9 +52,7 @@ class TransactionCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(top: 3.0),
                 child: Text(
-                  _transaction.tva == 'multi-TVA'
-                      ? 'multi-TVA'
-                      : 'TVA ${_transaction.tva}%',
+                  'TVA 10%',
                   style: Theme.of(context).textTheme.subtitle1.copyWith(
                       fontSize: 10.0,
                       fontWeight: FontWeight.w300,
@@ -86,19 +72,20 @@ class TransactionCard extends StatelessWidget {
     return InkWell(
       highlightColor: Color(0xFFEEEEFC),
       splashColor: Color(0xFFEEEEFC),
-      onTap: () =>
-          Navigator.pushNamed(context, detailsRoute, arguments: _transaction),
+      onTap: () => Navigator.pushNamed(context, detailsRoute,
+          arguments: _transactionAttributes),
       child: ListTile(
-        leading: _buildDate(context),
+        leading: DateCard(
+            date: dateConverter.convertDate(_transactionAttributes.date)),
         title: Row(
           children: [
             Expanded(
               child: Text(
-                _transaction.name,
+                _transactionAttributes.description,
                 style: Theme.of(context)
                     .textTheme
                     .headline6
-                    .copyWith(fontWeight: FontWeight.bold, fontSize: 14.0),
+                    .copyWith(fontWeight: FontWeight.bold, fontSize: 12.0),
               ),
             ),
             Icon(Icons.more_horiz, color: Theme.of(context).primaryColor),

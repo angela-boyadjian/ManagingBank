@@ -75,7 +75,7 @@ class TransactionAttributes {
   String rawDescription;
   String externalId;
   String amount;
-  DateTime date;
+  String date;
   String currencyCode;
   bool isDeleted;
   bool isFuture;
@@ -96,7 +96,7 @@ class TransactionAttributes {
         rawDescription: json == null ? null : json["raw_description"],
         externalId: json == null ? null : json["external_id"],
         amount: json == null ? null : json["amount"],
-        date: json == null ? null : DateTime.parse(json["date"]),
+        date: json == null ? null : json["date"],
         currencyCode: json == null ? null : json["currency_code"],
         isDeleted: json == null ? null : json["is_deleted"],
         isFuture: json == null ? null : json["is_future"],
@@ -124,8 +124,7 @@ class TransactionAttributes {
         "raw_description": rawDescription,
         "external_id": externalId,
         "amount": amount,
-        "date":
-            "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+        "date": date,
         "currency_code": currencyCode,
         "is_deleted": isDeleted,
         "is_future": isFuture,
