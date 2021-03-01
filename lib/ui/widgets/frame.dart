@@ -1,13 +1,16 @@
+import 'package:data/data.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:mimi/logic/bloc/bloc.dart';
 import 'package:mimi/constants/constants.dart';
+import 'package:mimi/logic/cubit/transactions/transactions_cubit.dart';
 import 'package:mimi/ui/screens/results/results_screen.dart';
 import 'package:mimi/ui/screens/profile/profile_screen.dart';
 import 'package:mimi/ui/screens/declarations/declarations_screen.dart';
 import 'package:mimi/ui/screens/transactions/transactions_screen.dart';
+import 'package:users/users_repository.dart';
 
 import 'nav_bar.dart';
 
@@ -52,13 +55,19 @@ class _FrameState extends State<Frame> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final User user = context.select((UserBloc bloc) => bloc.state.user);
+
     return BlocBuilder<TabBloc, TabScreens>(
       builder: (context, activeTab) {
         return Scaffold(
           key: _scaffoldKey,
           body: PageView(
             children: <Widget>[
-              TransactionsScreen(),
+              BlocProvider(
+                  lazy: false,
+                  create: (context) => TransactionsCubit(
+                      context.read<DataRepository>(), user?.uuid, user?.header),
+                  child: TransactionsScreen()),
               ResultsScreen(),
               DeclarationsScreen(),
               ProfileScreen()

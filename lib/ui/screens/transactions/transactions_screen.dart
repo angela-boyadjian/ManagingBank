@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:mimi/constants/constants.dart';
+import 'package:mimi/logic/cubit/transactions/transactions_cubit.dart';
 import 'package:mimi/ui/models/drop_downs.dart';
 import 'package:mimi/ui/widgets/pending_card.dart';
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
@@ -32,12 +34,40 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar("Transactions"),
       body: Column(
         children: [
           SizedBox(height: 30.0),
+          Flexible(
+            flex: 1,
+            child: Center(
+              child: BlocBuilder<TransactionsCubit, TransactionsState>(
+                  builder: (context, state) {
+                String name = "";
+                if (state is TransactionsInitial ||
+                    state is TransactionsInProgress) {
+                  name = 'Loading...';
+                }
+                if (state is TransactionsSuccess) {
+                  name = state.transactions[0].attributes.description;
+                }
+                return Text(
+                  name,
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle1
+                      .copyWith(fontSize: 24.0, fontWeight: FontWeight.w700),
+                );
+              }),
+            ),
+          ),
           Flexible(
             flex: 1,
             child: Center(

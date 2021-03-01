@@ -7,7 +7,7 @@ abstract class BankAccountState extends Equatable {
   const BankAccountState({this.banks, this.amount});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [this.amount, this.banks];
 }
 
 class BankAccountInitial extends BankAccountState {}
@@ -20,7 +20,7 @@ class BankAccountSuccess extends BankAccountState {
 
   const BankAccountSuccess({this.banks, this.amount});
   @override
-  List<Object> get props => [];
+  List<Object> get props => [this.amount, this.banks];
 }
 
 class BankAccountError extends BankAccountState {}
