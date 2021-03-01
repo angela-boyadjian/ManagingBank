@@ -44,7 +44,7 @@ class APIProvider extends AProvider {
         jsonDecode(await _getApiCall("${constants.userURL}$uuid", header));
     var userData = userDecoded['data']['attributes'];
 
-    // Get Org => Find a way to check if org is null
+    // FIXME Get Org => Find a way to check if org is null
     Organization userOrg = Organization(
         decodedToken['organizations'][0]['uuid'],
         decodedToken['organizations'][0]['name']);
