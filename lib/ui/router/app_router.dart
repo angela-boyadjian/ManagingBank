@@ -1,14 +1,12 @@
-import 'package:data/data_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mimi/logic/cubit/cubit.dart';
-import 'package:mimi/ui/screens/categories/categories_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
+import 'package:data/data_repository.dart';
+
 import 'package:mimi/logic/bloc/bloc.dart';
-import 'package:mimi/ui/widgets/frame.dart';
+import 'package:mimi/logic/cubit/cubit.dart';
 import 'package:mimi/constants/constants.dart';
-import 'package:mimi/ui/models/drop_downs.dart';
 import 'package:mimi/ui/screens/login/login_screen.dart';
 import 'package:mimi/ui/screens/login/reset_screen.dart';
 import 'package:mimi/ui/screens/search/search_screen.dart';
@@ -19,6 +17,7 @@ import 'package:mimi/ui/screens/treasury/treasury_screen.dart';
 import 'package:mimi/ui/screens/revenues/revenues_screen.dart';
 import 'package:mimi/ui/screens/settings/settings_screen.dart';
 import 'package:mimi/ui/screens/spendings/spendings_screen.dart';
+import 'package:mimi/ui/screens/categories/categories_screen.dart';
 import 'package:mimi/ui/screens/add_category/add_category_screen.dart';
 
 class AppRouter {

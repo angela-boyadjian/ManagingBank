@@ -2,18 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'package:data/data_repository.dart';
 import 'package:mimi/constants/constants.dart';
-import 'package:mimi/ui/models/drop_downs.dart';
 import 'package:mimi/ui/utils/date_converter.dart';
 import 'package:mimi/ui/widgets/date/date_card.dart';
 
 import 'status_card.dart';
 
 class TransactionCard extends StatelessWidget {
-  final TransactionModel _transaction;
   final TransactionAttributes _transactionAttributes;
   final DateConverter dateConverter = DateConverter();
 
-  TransactionCard(this._transaction, this._transactionAttributes);
+  TransactionCard(this._transactionAttributes);
 
   String getCategory() {
     String category = "Sans catégorie";

@@ -38,6 +38,7 @@ const String themePref = 'theme';
 // Numbers
 const double min = 0;
 const double max = 5000;
+const int perPage = 10;
 
 // Maps
 const Map months = {

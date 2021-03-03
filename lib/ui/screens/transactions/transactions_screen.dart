@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:mimi/constants/constants.dart';
-import 'package:mimi/logic/cubit/transactions/transactions_cubit.dart';
-import 'package:mimi/ui/models/drop_downs.dart';
+import 'package:mimi/logic/bloc/bloc.dart';
 import 'package:mimi/ui/widgets/pending_card.dart';
+import 'package:mimi/ui/widgets/bottom_loader.dart';
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
+import 'package:mimi/constants/constants.dart' as constants;
 
 import 'widgets/transaction_card.dart';
 
@@ -18,24 +18,30 @@ class TransactionsScreen extends StatefulWidget {
 }
 
 class _TransactionsScreenState extends State<TransactionsScreen> {
-  final List<TransactionModel> _transactions = [
-    TransactionModel("Prlv Droit de garde Titres", "-100,00 €", "0",
-        "Sans catégorie", "MAI", "03"),
-    TransactionModel("Le Rameau St Denis", "-92,20 €", "10",
-        "Déplacement, missions, réceptions", "MAI", "02"),
-    TransactionModel("Bricomarché", "-54,20 €", "multi-TVA", "Multi-catégories",
-        "MAI", "02"),
-    TransactionModel("Thalys", "-234,45 €", "10",
-        "Déplacement, missions, réceptions", "AVR", "30"),
-    TransactionModel("Prlv Droit de garde Titres", "-100,00 €", "0",
-        "Sans catégorie", "MAI", "03"),
-    TransactionModel("Le Rameau St Denis", "-92,20 €", "10",
-        "Déplacement, missions, réceptions", "MAI", "02"),
-  ];
+  final _scrollController = ScrollController();
+  final _scrollThreshold = 200.0;
+  TransactionsBloc _transactionsBloc;
 
   @override
   void initState() {
     super.initState();
+    _scrollController.addListener(_onScroll);
+    _transactionsBloc = BlocProvider.of<TransactionsBloc>(context);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.position.pixels;
+
+    if (maxScroll - currentScroll <= _scrollThreshold) {
+      _transactionsBloc.add(TransactionsFetched());
+    }
   }
 
   @override
@@ -68,19 +74,33 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
             flex: 4,
             child: Container(
               color: Colors.white,
-              child: BlocBuilder<TransactionsCubit, TransactionsState>(
+              child: BlocBuilder<TransactionsBloc, TransactionsState>(
                 builder: (context, state) {
-                  if (state is TransactionsInitial ||
-                      state is TransactionsInProgress) {
-                    return (Text('Loading...'));
+                  if (state is TransactionsInitial) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (state is TransactionsFailure) {
+                    return Center(
+                      child: Text('failed to fetch transactions'),
+                    );
                   }
                   if (state is TransactionsSuccess) {
+                    if (state.transactions.isEmpty) {
+                      return Center(
+                        child: Text('no transactions'),
+                      );
+                    }
                     return ListView.separated(
+                      controller: _scrollController,
                       scrollDirection: Axis.vertical,
                       itemCount: state.transactions.length,
-                      itemBuilder: (context, index) {
-                        return TransactionCard(_transactions[index],
-                            state.transactions[index].attributes);
+                      itemBuilder: (BuildContext context, index) {
+                        return index >= state.transactions.length
+                            ? BottomLoader()
+                            : TransactionCard(
+                                state.transactions[index].attributes);
                       },
                       separatorBuilder: (context, index) {
                         return Container(
@@ -90,7 +110,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                       },
                     );
                   }
-                  return Container();
+                  return Center(child: CircularProgressIndicator());
                 },
               ),
             ),
@@ -108,7 +128,8 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
         child: FloatingActionButton(
             child: Icon(FontAwesomeIcons.search, color: Colors.white, size: 22),
             backgroundColor: Theme.of(context).primaryColor,
-            onPressed: () => Navigator.of(context).pushNamed(searchRoute)),
+            onPressed: () =>
+                Navigator.of(context).pushNamed(constants.searchRoute)),
       ),
     );
   }
