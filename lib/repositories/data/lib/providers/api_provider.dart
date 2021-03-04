@@ -1,3 +1,5 @@
+import 'package:data/models/spendings.dart';
+
 import 'provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,6 +11,8 @@ class APIProvider extends AProvider {
   _getApiCall(String url, Map<String, String> header) async {
     http.Response response = await http.get(url, headers: header);
     if (response.statusCode != 200) throw Exception();
+    print('CODE: ${response.statusCode}');
+    print('BODY: ${response.body}');
     return (response.body);
   }
 
@@ -24,5 +28,13 @@ class APIProvider extends AProvider {
       String uuid, Map<String, String> header, int page) async {
     return transactionsFromJson(await _getApiCall(
         "${constants.transactionsUrl}$uuid&page=$page&per_page=5", header));
+  }
+
+  @override
+  Future<Spendings> getSpendings(String uuid, Map<String, String> header,
+      String orgUuid, String period) async {
+    return spendingsFromJson(await _getApiCall(
+        "${constants.transactionsUrl}$orgUuid?group_by=categories&period=$period",
+        header));
   }
 }

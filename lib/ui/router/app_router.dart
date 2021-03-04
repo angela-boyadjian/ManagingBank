@@ -61,7 +61,6 @@ class AppRouter {
       case treasuryRoute:
         BankAccountCubit bankAccountCubit =
             settings.arguments as BankAccountCubit;
-
         return PageTransition(
           child: BlocProvider.value(
             value: bankAccountCubit,
@@ -71,8 +70,12 @@ class AppRouter {
           duration: Duration(milliseconds: 400),
         );
       case spendingsRoute:
+        SpendingsCubit spendingsCubit = settings.arguments as SpendingsCubit;
         return PageTransition(
-          child: SpendingsScreen(),
+          child: BlocProvider.value(
+            value: spendingsCubit,
+            child: SpendingsScreen(),
+          ),
           type: PageTransitionType.rightToLeftWithFade,
           duration: Duration(milliseconds: 400),
         );

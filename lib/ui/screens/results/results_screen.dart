@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:data/data_repository.dart';
-import 'package:users/users_repository.dart';
-
-import 'package:mimi/logic/bloc/bloc.dart';
 import 'package:mimi/logic/cubit/cubit.dart';
 import 'package:mimi/constants/constants.dart';
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
@@ -34,8 +30,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final User user = context.select((UserBloc bloc) => bloc.state.user);
-
     return Scaffold(
       appBar: CustomAppBar("Résultats"),
       body: Stack(
@@ -59,30 +53,29 @@ class _ResultsScreenState extends State<ResultsScreen> {
                 ],
               ),
               SizedBox(height: 30.0),
-              // Flexible(
-              //   flex: 1,
-              //   child: ResultCard(
-              //     title: "Dépenses",
-              //     amount: "2 567,92 €",
-              //     color: Theme.of(context).accentColor,
-              //     route: spendingsRoute,
-              //   ),
-              // ),
-              // Flexible(
-              //   flex: 1,
-              //   child: ResultCard(
-              //     title: "Recettes",
-              //     amount: "10 546,12 €",
-              //     color: Color(0xFF48D73C),
-              //     route: revenuesRoute,
-              //   ),
-              // ),
               Flexible(
                 flex: 1,
-                child: BlocProvider(
-                  lazy: false,
-                  create: (context) => BankAccountCubit(
-                      context.read<DataRepository>(), user?.uuid, user?.header),
+                child: ResultCard(
+                  title: "Recettes",
+                  color: Color(0xFF48D73C),
+                  route: revenuesRoute,
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: BlocProvider.value(
+                  value: BlocProvider.of<SpendingsCubit>(context),
+                  child: ResultCard(
+                    title: "Dépenses",
+                    color: Theme.of(context).accentColor,
+                    route: spendingsRoute,
+                  ),
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: BlocProvider.value(
+                  value: BlocProvider.of<BankAccountCubit>(context),
                   child: ResultCard(
                     title: "Trésorerie",
                     color: Color(0xFF5353E0),

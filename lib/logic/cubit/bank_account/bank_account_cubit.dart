@@ -15,7 +15,7 @@ class BankAccountCubit extends Cubit<BankAccountState> {
 
   BankAccountCubit(this._dataRepository, this._uuid, this._header)
       : super(BankAccountInitial()) {
-    _getBankAccounts();
+    getBankAccounts();
   }
 
   String _getTotal() {
@@ -27,7 +27,7 @@ class BankAccountCubit extends Cubit<BankAccountState> {
     return f.format(result).toString();
   }
 
-  Future<void> _getBankAccounts() async {
+  Future<void> getBankAccounts() async {
     emit(BankAccountInProgress());
     _bankAccounts =
         await _dataRepository.getBankAccountByUser(this._uuid, this._header);

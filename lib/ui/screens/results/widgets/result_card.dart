@@ -30,6 +30,14 @@ class _ResultCardState extends State<ResultCard> {
     super.initState();
   }
 
+  getRightCubit() {
+    if (widget.title == "Trésorerie") {
+      return context.read<BankAccountCubit>();
+    } else if (widget.title == "Dépenses") {
+      return context.read<SpendingsCubit>();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -39,8 +47,8 @@ class _ResultCardState extends State<ResultCard> {
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: InkWell(
-        onTap: () => Navigator.of(context).pushNamed(widget.route,
-            arguments: context.read<BankAccountCubit>()),
+        onTap: () => Navigator.of(context)
+            .pushNamed(widget.route, arguments: getRightCubit()),
         child: Container(
           width: MediaQuery.of(context).size.width - 30.0,
           decoration: BoxDecoration(
@@ -66,28 +74,7 @@ class _ResultCardState extends State<ResultCard> {
                     SizedBox(height: 5.0),
                     Padding(
                       padding: EdgeInsets.only(left: 12.0),
-                      child: BlocBuilder<BankAccountCubit, BankAccountState>(
-                        builder: (context, state) {
-                          String amount = "";
-                          if (state is BankAccountInitial ||
-                              state is BankAccountInProgress) {
-                            amount = "Loading...";
-                          }
-                          if (state is BankAccountSuccess) {
-                            amount = state.amount;
-                          }
-                          return Text(
-                            amount,
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1
-                                .copyWith(
-                                    fontSize: 24.0,
-                                    fontWeight: FontWeight.w700,
-                                    color: color),
-                          );
-                        },
-                      ),
+                      child: _buildAmount(),
                     ),
                   ],
                 ),
@@ -100,6 +87,46 @@ class _ResultCardState extends State<ResultCard> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildAmount() {
+    if (widget.title == "Trésorerie") {
+      return BlocBuilder<BankAccountCubit, BankAccountState>(
+        builder: (context, state) {
+          if (state is BankAccountInitial || state is BankAccountInProgress) {
+            return Column(
+              children: [
+                SizedBox(height: 10.0),
+                Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ],
+            );
+          }
+          if (state is BankAccountSuccess) {
+            return Text(
+              state.amount + " €",
+              style: Theme.of(context).textTheme.subtitle1.copyWith(
+                  fontSize: 24.0, fontWeight: FontWeight.w700, color: color),
+            );
+          }
+          return Center(child: CircularProgressIndicator());
+        },
+      );
+    } else if (widget.title == "Dépenses") {
+      return Text(
+        "5 234" + " €",
+        style: Theme.of(context).textTheme.subtitle1.copyWith(
+            fontSize: 24.0, fontWeight: FontWeight.w700, color: color),
+      );
+    }
+    return Text(
+      "89 342" + " €",
+      style: Theme.of(context)
+          .textTheme
+          .subtitle1
+          .copyWith(fontSize: 24.0, fontWeight: FontWeight.w700, color: color),
     );
   }
 }

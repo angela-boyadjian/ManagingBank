@@ -1,6 +1,7 @@
 import 'package:data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mimi/logic/cubit/cubit.dart';
 
 import 'package:users/users_repository.dart';
 
@@ -68,7 +69,25 @@ class _FrameState extends State<Frame> with SingleTickerProviderStateMixin {
                   ..add(TransactionsFetched()),
                 child: TransactionsScreen(),
               ),
-              ResultsScreen(),
+              MultiBlocProvider(
+                providers: [
+                  BlocProvider<BankAccountCubit>(
+                    create: (context) => BankAccountCubit(
+                        context.read<DataRepository>(),
+                        user?.uuid,
+                        user?.header),
+                  ),
+                  BlocProvider<SpendingsCubit>(
+                    create: (context) => SpendingsCubit(
+                      context.read<DataRepository>(),
+                      user?.uuid,
+                      user?.header,
+                      user?.organization?.uuid,
+                    ),
+                  ),
+                ],
+                child: ResultsScreen(),
+              ),
               DeclarationsScreen(),
               ProfileScreen()
             ],
