@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:mimi/logic/cubit/cubit.dart';
 
 class ResultCard extends StatefulWidget {
@@ -90,43 +91,45 @@ class _ResultCardState extends State<ResultCard> {
     );
   }
 
+  Widget _amountText(String amount) => Text(
+        amount + " €",
+        style: Theme.of(context).textTheme.subtitle1.copyWith(
+            fontSize: 24.0, fontWeight: FontWeight.w700, color: color),
+      );
+
+  Widget _progressIndicator() => Column(
+        children: [
+          SizedBox(height: 10.0),
+          Center(
+            child: CircularProgressIndicator(),
+          ),
+        ],
+      );
+
   Widget _buildAmount() {
     if (widget.title == "Trésorerie") {
       return BlocBuilder<BankAccountCubit, BankAccountState>(
         builder: (context, state) {
           if (state is BankAccountInitial || state is BankAccountInProgress) {
-            return Column(
-              children: [
-                SizedBox(height: 10.0),
-                Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ],
-            );
+            return _progressIndicator();
           }
-          if (state is BankAccountSuccess) {
-            return Text(
-              state.amount + " €",
-              style: Theme.of(context).textTheme.subtitle1.copyWith(
-                  fontSize: 24.0, fontWeight: FontWeight.w700, color: color),
-            );
-          }
+          if (state is BankAccountSuccess) return _amountText(state.amount);
           return Center(child: CircularProgressIndicator());
         },
       );
     } else if (widget.title == "Dépenses") {
-      return Text(
-        "5 234" + " €",
-        style: Theme.of(context).textTheme.subtitle1.copyWith(
-            fontSize: 24.0, fontWeight: FontWeight.w700, color: color),
+      return BlocBuilder<SpendingsCubit, SpendingsState>(
+        builder: (context, state) {
+          if (state is SpendingsInitial) return _progressIndicator();
+          if (state is SpendingsSuccess) {
+            var result = NumberFormat("###,000.0#", "fr")
+                .format(state.spendings.data.attributes.balance.values.first);
+            return _amountText(result.toString());
+          }
+          return Center(child: CircularProgressIndicator());
+        },
       );
     }
-    return Text(
-      "89 342" + " €",
-      style: Theme.of(context)
-          .textTheme
-          .subtitle1
-          .copyWith(fontSize: 24.0, fontWeight: FontWeight.w700, color: color),
-    );
+    return _amountText("89 213");
   }
 }

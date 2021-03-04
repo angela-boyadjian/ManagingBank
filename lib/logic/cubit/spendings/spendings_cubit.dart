@@ -12,7 +12,9 @@ class SpendingsCubit extends Cubit<SpendingsState> {
   final String _orgUuid;
 
   SpendingsCubit(this._dataRepository, this._uuid, this._header, this._orgUuid)
-      : super(SpendingsInitial());
+      : super(SpendingsInitial()) {
+    fetchSpendings("month");
+  }
 
   Future<void> fetchSpendings(String period) async {
     try {

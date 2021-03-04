@@ -10,9 +10,9 @@ import 'package:data/constants/constants.dart' as constants;
 class APIProvider extends AProvider {
   _getApiCall(String url, Map<String, String> header) async {
     http.Response response = await http.get(url, headers: header);
-    if (response.statusCode != 200) throw Exception();
     print('CODE: ${response.statusCode}');
     print('BODY: ${response.body}');
+    if (response.statusCode != 200) throw Exception();
     return (response.body);
   }
 
@@ -34,7 +34,7 @@ class APIProvider extends AProvider {
   Future<Spendings> getSpendings(String uuid, Map<String, String> header,
       String orgUuid, String period) async {
     return spendingsFromJson(await _getApiCall(
-        "${constants.transactionsUrl}$orgUuid?group_by=categories&period=$period",
+        "${constants.spendingsUrl}$orgUuid?group_by=categories&period=$period",
         header));
   }
 }
