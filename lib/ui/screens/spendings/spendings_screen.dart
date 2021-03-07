@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import 'package:mimi/logic/cubit/cubit.dart';
-import 'package:mimi/ui/screens/spendings/widgets/spendings_card.dart';
 import 'package:mimi/ui/widgets/growth_card.dart';
 import 'package:mimi/ui/widgets/custom_app_bar.dart';
 import 'package:mimi/ui/widgets/drop_down/drop_down_model.dart';
+import 'package:mimi/ui/widgets/custom_progress_indicator.dart';
 import 'package:mimi/ui/widgets/drop_down/custom_drop_down.dart';
+import 'package:mimi/ui/screens/spendings/widgets/spendings_card.dart';
 
 import 'widgets/payment_card.dart';
 
@@ -15,6 +17,15 @@ class SpendingsScreen extends StatefulWidget {
 
   @override
   _SpendingsScreenState createState() => _SpendingsScreenState();
+}
+
+// FIXME
+class PaymentModel {
+  final String title;
+  final String amount;
+  final double percent;
+
+  PaymentModel(this.title, this.amount, this.percent);
 }
 
 class _SpendingsScreenState extends State<SpendingsScreen> {
@@ -42,13 +53,24 @@ class _SpendingsScreenState extends State<SpendingsScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
-                    "2 567, 92 €",
-                    style: Theme.of(context).textTheme.headline1.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: Theme.of(context).accentColor,
-                          fontSize: 36,
-                        ),
+                  BlocBuilder<SpendingsCubit, SpendingsState>(
+                    builder: (context, state) {
+                      if (state is SpendingsSuccess) {
+                        return Text(
+                          NumberFormat("###,000.0#", "fr")
+                                  .format(state.spendings.data.attributes
+                                      .balance.values.first)
+                                  .toString() +
+                              ' €',
+                          style: Theme.of(context).textTheme.headline1.copyWith(
+                                fontWeight: FontWeight.w700,
+                                color: Theme.of(context).accentColor,
+                                fontSize: 36,
+                              ),
+                        );
+                      }
+                      return Center(child: CustomProgressIndicator());
+                    },
                   ),
                   SizedBox(width: 15),
                   GrowthCard(isOrange: true),
@@ -95,13 +117,4 @@ class _SpendingsScreenState extends State<SpendingsScreen> {
       ),
     );
   }
-}
-
-// FIXME
-class PaymentModel {
-  final String title;
-  final String amount;
-  final double percent;
-
-  PaymentModel(this.title, this.amount, this.percent);
 }
