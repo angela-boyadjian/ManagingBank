@@ -1,3 +1,3 @@
-# mimi
+# ManagingBank
 
-Banking application
+Banking application to manage your accounts and expanses
